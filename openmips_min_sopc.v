@@ -113,7 +113,8 @@ module openmips_min_sopc(
 	 assign ram1datainout = 16'bz;
 	 assign ram1addr = 0;
 	 
-	 assign ram2_CE = ~mem_ce_i;
+//	 assign ram2_CE = ~mem_ce_i;
+	 assign ram2_CE = 1;
 	 assign ram2_WE_L = ~mem_we_i | clk;
 	 assign ram2_OE_L = mem_we_i;
 	 assign ram2datainout = (mem_we_i ? mem_data_i : 16'bz);

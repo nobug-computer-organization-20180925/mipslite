@@ -166,7 +166,7 @@ module id(
 						instvalid <= `InstValid;
 					end
 					`INST_CMP:	begin
-						wreg_o <= `WriteEnable;
+						wreg_o <= `WriteDisable;
 						aluop_o <= `EXE_CMP_OP;
 						alusel_o <= `EXE_RES_MOVE;
 						reg1_read_o <= 1'b1;
@@ -320,6 +320,21 @@ module id(
 					end
 				endcase
 			end	
+				`EXE_BTEQZ:			begin
+				if(inst_i[10:8]==0) begin
+					wreg_o <= `WriteDisable;
+					aluop_o <= `EXE_J_OP; //useless!
+					alusel_o <= `EXE_RES_JUMP_BRANCH;
+					reg1_read_o <= 1'b1;	reg2_read_o <= 1'b0;
+					reg1_addr_o <= 4'b1010;
+					instvalid <= `InstValid;	
+					if(reg1_o == 0) begin
+						branch_target_address_o <= inst_b2_address;
+						branch_flag_o <= `Branch;
+						next_inst_in_delayslot_o <= `InDelaySlot;		  	
+					end
+				end
+			end
 
 		   default:			begin
 		   end

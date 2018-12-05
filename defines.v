@@ -43,7 +43,7 @@
 `define EXE_IH		5'b11110
 `define EXE_BGEZ  5'b00001
 `define EXE_SLLSRA 5'b00110
-
+`define EXE_BTEQZ 5'b01100
 //op4
 `define INST_OR	5'b01101
 `define INST_AND	5'b01100
