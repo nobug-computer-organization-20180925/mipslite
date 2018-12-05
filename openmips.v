@@ -47,7 +47,8 @@ module openmips(
 	output wire[`RegBus]           ram_addr_o,
 	output wire[`RegBus]           ram_data_o,
 	output wire                    ram_we_o,
-	output wire[3:0]               ram_ce_o
+	output wire[3:0]               ram_ce_o,
+	output wire[5:0] stall
 	
 );
 
@@ -114,7 +115,6 @@ module openmips(
   wire[`RegAddrBus] reg1_addr;
   wire[`RegAddrBus] reg2_addr;
 
-	wire[5:0] stall;
 	wire stallreq_from_id;	
 	wire stallreq_from_ex;
 
