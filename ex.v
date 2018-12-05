@@ -55,7 +55,7 @@ module ex(
 
 	//���������ļ���������Ϊ���ء��洢ָ��׼����
 		output wire[`AluOpBus]        aluop_o,
-	output wire[`RegBus]          mem_addr_o,
+	output reg[`RegBus]          mem_addr_o,
 	output wire[`RegBus]          reg2_o,
 
 		output wire stallreq
@@ -76,8 +76,6 @@ module ex(
   //aluop_o���ݵ��ô��׶Σ����ڼ��ء��洢ָ��
   assign aluop_o = aluop_i;
 
-  //mem_addr���ݵ��ô��׶Σ��Ǽ��ء��洢ָ����Ӧ�Ĵ洢����ַ
-  assign mem_addr_o = reg1_i + {{11{inst_i[4]}},inst_i[4:0]};
 
   //������������Ҳ���ݵ��ô��׶Σ�Ҳ��Ϊ���ء��洢ָ��׼����
   assign reg2_o = reg2_i;
@@ -167,6 +165,24 @@ module ex(
 			endcase
 		end	//if
 	end	//always
+
+	always @ (*) begin
+		if(rst == `RstEnable) begin
+			mem_addr_o <= `ZeroWord;
+		end else begin
+			mem_addr_o <= `ZeroWord;
+			case (aluop_i)
+				`EXE_SW_OP:		begin
+					mem_addr_o <=  reg1_i + {{11{inst_i[4]}},inst_i[4:0]};
+				end
+				`EXE_SWRS_OP:		begin
+					mem_addr_o <=  reg1_i + {{8{inst_i[7]}},inst_i[7:0]};
+				end
+				default: begin
+				end
+			endcase
+		end
+	end
 
  always @ (*) begin
 	 wd_o <= wd_i;

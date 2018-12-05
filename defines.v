@@ -60,6 +60,7 @@
 `define EXE_J_OP  8'b01001111
 `define EXE_LW_OP  8'b11100011
 `define EXE_SW_OP  8'b11101011
+`define EXE_SWRS_OP 8'b11111011
 `define EXE_BEQ_OP  8'b01010001
 `define EXE_BNE_OP  8'b01010010
 `define EXE_LI_OP  8'b11100000 //used to be LB
@@ -108,4 +109,9 @@
 `define DoubleRegBus 31:0
 `define RegNum 16
 `define RegNumLog2 4
-`define NOPRegAddr 4'b0000
+`define NOPRegAddr 4'b1000
+`define SPRegAddr  4'b1001
+`define TRegAddr   4'b1010
+`define RARegAddr  4'b1011
+`define IHRegAddr  4'b1100
+

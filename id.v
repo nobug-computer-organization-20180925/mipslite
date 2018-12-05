@@ -320,20 +320,55 @@ module id(
 					end
 				endcase
 			end	
-				`EXE_BTEQZ:			begin
-				if(inst_i[10:8]==0) begin
-					wreg_o <= `WriteDisable;
-					aluop_o <= `EXE_J_OP; //useless!
-					alusel_o <= `EXE_RES_JUMP_BRANCH;
-					reg1_read_o <= 1'b1;	reg2_read_o <= 1'b0;
-					reg1_addr_o <= 4'b1010;
-					instvalid <= `InstValid;	
-					if(reg1_o == 0) begin
-						branch_target_address_o <= inst_b2_address;
-						branch_flag_o <= `Branch;
-						next_inst_in_delayslot_o <= `InDelaySlot;		  	
+			`EXE_BTEQZ:			begin
+				case(op2)
+					3'b000: begin //bteqz
+						wreg_o <= `WriteDisable;
+						aluop_o <= `EXE_J_OP; //useless!
+						alusel_o <= `EXE_RES_JUMP_BRANCH;
+						reg1_read_o <= 1'b1;	reg2_read_o <= 1'b0;
+						reg1_addr_o <= 4'b1010;
+						instvalid <= `InstValid;	
+						if(reg1_o == 0) begin
+							branch_target_address_o <= inst_b2_address;
+							branch_flag_o <= `Branch;
+							next_inst_in_delayslot_o <= `InDelaySlot;		  	
+						end
 					end
-				end
+					3'b011:	begin	//addsp
+						wreg_o <= `WriteEnable;		
+						aluop_o <= `EXE_ADDIU_OP;
+						alusel_o <= `EXE_RES_ARITHMETIC; 
+						reg1_read_o <= 1'b1;	
+						reg2_read_o <= 1'b0;	
+						imm <= {{8{inst_i[7]}},inst_i[7:0]};
+						wd_o <= `SPRegAddr;
+						reg1_addr_o <= `SPRegAddr;
+						instvalid <= `InstValid;
+					end
+					3'b100:	begin	//mtsp
+						wreg_o <= `WriteEnable;		
+						aluop_o <= `EXE_MOVE_OP;
+						alusel_o <= `EXE_RES_MOVE; 
+						reg1_read_o <= 1'b1;	
+						reg2_read_o <= 1'b1;	
+						wd_o <= `SPRegAddr;
+						instvalid <= `InstValid;
+					end
+					3'b010:	begin	//swrs
+						wreg_o <= `WriteDisable;		
+						aluop_o <= `EXE_SWRS_OP;
+						reg1_addr_o <= `SPRegAddr;
+						reg2_addr_o <= `RARegAddr;
+						reg1_read_o <= 1'b1;
+						reg2_read_o <= 1'b1; 
+						alusel_o <= `EXE_RES_LOAD_STORE;
+						instvalid <= `InstValid;
+					end
+				
+					default:	begin
+					end
+				endcase
 			end
 
 		   default:			begin
