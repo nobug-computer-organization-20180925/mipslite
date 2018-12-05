@@ -55,6 +55,7 @@ module inst_rom(
 	inst_mem[6]<=16'b01101_001_000_00000;//01101 li reg1=0
 	inst_mem[7]<=16'b01101_001_000_00010;//01101 li reg1=2
 	inst_mem[8]<=16'b01001_001_111_11111;//01001 addiu: reg1=reg1-1 ans=0001
+	//inst_mem[8]<=16'b01100_011_000_11111;//01100 addsp: sp=sp-1 ans=0021
 	inst_mem[9]<=16'b01000_010_001_01111;//01000 addiu3: reg1=reg2-1 ans=0201
 	inst_mem[10]<=16'b11100_010_001_00111;//11100 subu: reg1=reg2-reg1 ans=0001
 	inst_mem[11]<=16'b11110_010_000_00001;//11110 mtih: ih=reg2 ans=0001

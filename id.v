@@ -297,6 +297,25 @@ module id(
 						wreg_o <= `WriteEnable;
 						wd_o <= `IHRegAddr;
 					end
+					default:		begin
+					end
+				endcase
+			end
+			`EXE_ADDSP:		begin
+				case(op2)
+					3'b011:	begin	//addsp
+						wreg_o <= `WriteEnable;		
+						aluop_o <= `EXE_ADDIU_OP;
+						alusel_o <= `EXE_RES_ARITHMETIC; 
+						reg1_read_o <= 1'b1;	
+						reg2_read_o <= 1'b0;	
+						imm <= {{8{inst_i[7]}},inst_i[7:0]};
+						wd_o <= `SPRegAddr;
+						reg1_addr_o <= `SPRegAddr;
+						instvalid <= `InstValid;
+					end
+					default:	begin
+					end
 				endcase
 			end
 		

@@ -41,6 +41,7 @@
 `define EXE_ADDIU 5'b01001
 `define EXE_ADDIU3 5'b01000
 `define EXE_IH		5'b11110
+`define EXE_ADDSP	5'b01100
 
 //op4
 `define INST_OR	5'b01101
