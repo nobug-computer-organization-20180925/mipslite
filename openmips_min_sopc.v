@@ -109,14 +109,14 @@ module openmips_min_sopc(
 	 assign wrn=1;
 	 assign rdn=1;
 
-    assign ram1_CE = 0;
+    assign ram1_CE = 1;
 	 assign ram1_WE_L = 0;
 	 assign ram1_OE_L = 0;
 	 assign ram1datainout = 16'bz;
 	 assign ram1addr = 0;
 	 
 //	 assign ram2_CE = ~mem_ce_i;
-	 assign ram2_CE = 1;
+	 assign ram2_CE = 0;
 	 assign ram2_WE_L = ~ram2_OE_L | clk;
 	 assign ram2_OE_L = mem_ce_i == `ChipEnable ? mem_we_i : `WriteDisable;
 	 assign ram2datainout = (mem_ce_i == `ChipEnable && mem_we_i ? mem_data_i : 16'bz);
