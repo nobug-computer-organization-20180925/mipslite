@@ -67,7 +67,7 @@ module openmips_min_sopc(
   wire[`RegBus] mem_addr_i;
   wire[`RegBus] mem_data_o;
   wire[`RegBus] mem_data_i;  
-  wire mem_ce_i;   
+  wire[3:0] mem_ce_i;   
   wire[5:0] stall;
 
   
@@ -118,10 +118,11 @@ module openmips_min_sopc(
 //	 assign ram2_CE = ~mem_ce_i;
 	 assign ram2_CE = 1;
 	 assign ram2_WE_L = ~ram2_OE_L | clk;
-	 assign ram2_OE_L = stall[1] == `Stop ? mem_we_i : `WriteDisable;
-	 assign ram2datainout = (stall[1] == `Stop && mem_we_i ? mem_data_i : 16'bz);
+	 assign ram2_OE_L = mem_ce_i == `ChipEnable ? mem_we_i : `WriteDisable;
+	 assign ram2datainout = (mem_ce_i == `ChipEnable && mem_we_i ? mem_data_i : 16'bz);
 	 assign mem_data_o = ram2datainout;
-	 assign ram2addr = stall[1] == `Stop ? mem_addr_i : inst_addr;
+	 assign inst = ram2datainout;
+	 assign ram2addr = mem_ce_i == `ChipEnable ? mem_addr_i : inst_addr;
 	
 	 
 endmodule

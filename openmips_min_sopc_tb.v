@@ -82,6 +82,35 @@ module openmips_min_sopc_tb();
 	reg[`DataBus] data_o;
 	assign mem_read = data_mem[ram2addr];
 	assign ram2datainout = ram2_OE_L ? 16'bz : data_o;
+	integer i;
+	always @(negedge rst) begin
+	for(i=0;i<`InstMemNum;i=i+1) data_mem[i]<=0;
+	data_mem[0]<=16'b11101_001_010_01101;//11101 or tail 01101: reg1=reg1 or reg2=0202 ans=0303
+	data_mem[1]<=16'b10011_000_001_00001;//10011 load reg1's value = 0 or 0404
+	data_mem[2]<=16'b11111_001_010_01101;//11111 ori: reg1 = reg1 or imm 01001101 004d ans=0000_0011_0100_1111
+	data_mem[3]<=16'b01111_001_011_00000;//01111 move: reg1 = reg2 tail 00000 ans=0404
+	data_mem[4]<=16'b11011_000_001_00001;//11011 save reg1's value 0404 to mem[1] 
+	data_mem[5]<=16'b00100_001_111_11100;//00100 branch: branch if=0 7:0 jump to pc=1
+	data_mem[6]<=16'b01101_001_000_00000;//01101 li reg1=0
+	data_mem[7]<=16'b01101_001_000_00010;//01101 li reg1=2
+	data_mem[8]<=16'b01001_001_111_11111;//01001 addiu: reg1=reg1-1 ans=0001
+	//data_mem[8]<=16'b01100_011_000_11111;//01100 addsp: sp=sp-1 ans=0021
+	data_mem[9]<=16'b01000_010_001_01111;//01000 addiu3: reg1=reg2-1 ans=0201
+	data_mem[10]<=16'b11100_010_001_00111;//11100 subu: reg1=reg2-reg1 ans=0001
+	data_mem[11]<=16'b11110_010_000_00001;//11110 mtih: ih=reg2 ans=0001
+	data_mem[12]<=16'b11110_001_000_00000;//11110 mfih: reg1=ih ans=0202
+	data_mem[13]<=16'b00100_001_111_10101;//00100 branch: branch if=0 7:0 jump to pc=3
+	data_mem[14]<=16'b01101_001_100_00001;//01101 li reg1=00000000_10000001 
+	data_mem[15]<=16'b01101_001_100_00010;//01101 li reg1=00000000_10000010 
+	data_mem[16]<=16'b00101_001_111_10010;//00101 branch: branch if!=0 7:0 jump to pc=3
+	data_mem[17]<=16'b01101_001_100_00101;//01101 li reg1=00000000_10000101 
+	data_mem[18]<=16'b01101_001_100_01010;//01101 li reg1=00000000_10001010 
+	
+
+	end
+	
+	
+	
 	always @ (posedge ram2_WE_L) begin
 		if (ram2_CE == `ChipDisable) begin
 			//data_o <= ZeroWord;

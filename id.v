@@ -26,7 +26,7 @@
 // File:    id.v
 // Author:  Lei Silei
 // E-mail:  leishangwen@163.com
-// Description: ����׶�
+// Description: ����׶�
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -38,7 +38,7 @@ module id(
 	input wire[`InstAddrBus]			pc_i,
 	input wire[`InstBus]          inst_i,
 
-  //����ִ�н׶ε�ָ���һЩ��Ϣ�����ڽ��load���
+  //����ִ�н׶ε�ָ���һЩ��Ϣ�����ڽ��load���
   input wire[`AluOpBus]					ex_aluop_i,
 
 	//����ִ�н׶ε�ָ��Ҫд���Ŀ�ļĴ������
@@ -458,8 +458,8 @@ module id(
 		stallreq_for_reg1_loadrelate <= `NoStop;	
 		if(rst == `RstEnable) begin
 			reg1_o <= `ZeroWord;	
-		end else if(pre_inst_is_load == 1'b1 && ex_wd_i == reg1_addr_o 
-						&& reg1_read_o == 1'b1 ) begin
+		end else if(pre_inst_is_load == 1'b1 /*&& ex_wd_i == reg1_addr_o 
+						&& reg1_read_o == 1'b1 */) begin
 		  stallreq_for_reg1_loadrelate <= `Stop;	
 		end else if((reg1_read_o == 1'b1) && (ex_wreg_i == 1'b1) 
 				&& (ex_wd_i == reg1_addr_o)) begin
@@ -481,8 +481,8 @@ module id(
 				stallreq_for_reg2_loadrelate <= `NoStop;
 		if(rst == `RstEnable) begin
 			reg2_o <= `ZeroWord;
-		end else if(pre_inst_is_load == 1'b1 && ex_wd_i == reg2_addr_o 
-								&& reg2_read_o == 1'b1 ) begin
+		end else if(pre_inst_is_load == 1'b1 /*&& ex_wd_i == reg2_addr_o 
+								&& reg2_read_o == 1'b1 */) begin
 		  stallreq_for_reg2_loadrelate <= `Stop;	
 		end else if((reg2_read_o == 1'b1) && (ex_wreg_i == 1'b1) 
 				&& (ex_wd_i == reg2_addr_o)) begin

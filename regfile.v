@@ -62,7 +62,7 @@ module regfile(
 	
 	assign readDataTemp1 = regs[raddr1];
 	assign readDataTemp2 = regs[raddr2];
-	assign register1 = regs[1];
+	assign register1 = {8'b0,regs[1][3:0],regs[0][3:0]};
 
 	always @ (posedge clk) begin
 		if (rst == `RstDisable) begin
@@ -76,9 +76,9 @@ module regfile(
 			regs[2]<=16'h0202;
 			regs[3]<=16'h0404;
 			regs[4]<=16'h0808;
-			regs[5]<=16'h1010;
-			regs[6]<=16'h2020;
-			regs[7]<=16'h4040;
+			regs[5]<=16'h0;
+			regs[6]<=16'h0;
+			regs[7]<=16'h0;
 			regs[8]<=16'h0; //0
 			regs[9]<=16'h0; //SP
 			regs[10]<=16'h0; //T

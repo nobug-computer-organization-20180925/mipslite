@@ -51,8 +51,12 @@ module openmips(
 	output wire[5:0] stall
 	
 );
+	wire[`RegBus] register2;
 
 	wire[`InstAddrBus] pc;
+	
+	assign register1 = {pc[7:0], register2[7:0]};
+	
 	wire[`InstAddrBus] id_pc_i;
 	wire[`InstBus] id_inst_i;
 	
@@ -212,7 +216,7 @@ module openmips(
 		.raddr2 (reg2_addr),
 		.rdata2 (reg2_data),
 		
-		.register1(register1)
+		.register1(register2)
 	);
 
 	//ID/EX???
