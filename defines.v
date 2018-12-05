@@ -44,6 +44,8 @@
 `define EXE_BGEZ  5'b00001
 `define EXE_SLLSRA 5'b00110
 `define EXE_BTEQZ 5'b01100
+`define EXE_SWSP 5'b11010
+`define EXE_LWSP 5'b10010
 //op4
 `define INST_OR	5'b01101
 `define INST_AND	5'b01100

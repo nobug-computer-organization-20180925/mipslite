@@ -69,7 +69,7 @@ module ex(
 	wire[`RegBus] reg2_i_mux;
 	wire[`RegBus] result_sum;
 	
-	assign reg2_i_mux = (aluop_i == `EXE_SUBU_OP) ? (~reg2_i)+1 : reg2_i;
+	assign reg2_i_mux = (aluop_i == `EXE_SUBU_OP) ? (~reg2_i)+16'b1 : reg2_i;
 	assign result_sum = reg1_i + reg2_i_mux;
 
 	assign stallreq = 0;

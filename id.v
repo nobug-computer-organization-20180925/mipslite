@@ -235,6 +235,12 @@ module id(
 		  		alusel_o <= `EXE_RES_LOAD_STORE; reg1_read_o <= 1'b1;	reg2_read_o <= 1'b0;	  	
 				wd_o <= {1'b0,inst_i[7:5]}; instvalid <= `InstValid;	//reg[y] = mem{reg[x]+imm}
 			end
+			`EXE_LWSP:			begin
+		  		wreg_o <= `WriteEnable;		aluop_o <= `EXE_SWRS_OP;
+		  		alusel_o <= `EXE_RES_LOAD_STORE; reg1_read_o <= 1'b1;	reg2_read_o <= 1'b0;
+				reg1_addr_o <= `SPRegAddr;
+				wd_o <= {1'b0,inst_i[10:8]}; instvalid <= `InstValid;	//reg[y] = mem{reg[x]+imm}
+			end
 			`EXE_SW:			begin
 		  		wreg_o <= `WriteDisable;		aluop_o <= `EXE_SW_OP;
 		  		reg1_read_o <= 1'b1;	reg2_read_o <= 1'b1; instvalid <= `InstValid;	
@@ -310,6 +316,16 @@ module id(
 					end
 				endcase
 			end	
+			`EXE_SWSP:	begin
+				wreg_o <= `WriteDisable;		
+				aluop_o <= `EXE_SWRS_OP;
+				reg1_addr_o <= `SPRegAddr;
+				reg2_addr_o <= {1'b0, inst_i[10:8]};
+				reg1_read_o <= 1'b1;
+				reg2_read_o <= 1'b1; 
+				alusel_o <= `EXE_RES_LOAD_STORE;
+				instvalid <= `InstValid;
+			end
 			`EXE_BTEQZ:			begin
 				case(op2)
 					3'b000: begin //bteqz
