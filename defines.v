@@ -52,6 +52,8 @@
 `define INST_MFIH	5'b00000
 `define INST_MTIH	5'b00001
 `define INST_CMP	5'b01010
+`define INST_JR 	5'b00000
+`define INST_SLTU 	5'b00011
 
 //AluOp
 `define EXE_OR_OP    8'b00100101
@@ -73,6 +75,7 @@
 `define EXE_ADDIU3_OP	8'b01001001
 
 `define EXE_CMP_OP	8'b10101010
+`define EXE_SLTU_OP	8'b10111010
 `define EXE_SLL_OP 8'b01111100
 `define EXE_SRA_OP 8'b00000011
 
