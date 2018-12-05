@@ -24,7 +24,7 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  ex
 // File:    ex.v
-// Description: Ö´ï¿½Ð½×¶ï¿½
+// Description: Ö´ÐÐ½×¶Î
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -33,8 +33,8 @@
 module ex(
 
 	input wire rst,
-
-	//ï¿½Íµï¿½Ö´ï¿½Ð½×¶Îµï¿½ï¿½ï¿½Ï¢
+	
+	//ËÍµ½Ö´ÐÐ½×¶ÎµÄÐÅÏ¢
 	input wire[`AluOpBus]         aluop_i,
 	input wire[`AluSelBus]        alusel_i,
 	input wire[`RegBus]           reg1_i,
@@ -42,46 +42,46 @@ module ex(
 	input wire[`RegAddrBus]       wd_i,
 	input wire                    wreg_i,
 	input wire[`RegBus]           inst_i,
+	
 
-
-	//ï¿½Ç·ï¿½×ªï¿½Æ¡ï¿½ï¿½Ô¼ï¿½link address
+	//ÊÇ·ñ×ªÒÆ¡¢ÒÔ¼°link address
 	input wire[`RegBus]           link_address_i,
-	input wire                    is_in_delayslot_i,
-
-
+	input wire                    is_in_delayslot_i,	
+	
+	
 	output reg[`RegAddrBus]       wd_o,
 	output reg                    wreg_o,
 	output reg[`RegBus]		wdata_o,
-
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ø¡ï¿½ï¿½æ´¢Ö¸ï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½
+	
+	//ÏÂÃæÐÂÔöµÄ¼¸¸öÊä³öÊÇÎª¼ÓÔØ¡¢´æ´¢Ö¸Áî×¼±¸µÄ
 		output wire[`AluOpBus]        aluop_o,
 	output wire[`RegBus]          mem_addr_o,
 	output wire[`RegBus]          reg2_o,
 
-		output wire stallreq
+		output wire stallreq       
 );
 
 	reg[`RegBus] logicout;
 	reg[`RegBus] shiftres;//?
 	reg[`RegBus] moveres;
 	reg[`RegBus] arithmeticres;
-
+	
 	wire[`RegBus] reg2_i_mux;
 	wire[`RegBus] result_sum;
-
+	
 	assign reg2_i_mux = (aluop_i == `EXE_SUBU_OP) ? (~reg2_i)+1 : reg2_i;
 	assign result_sum = reg1_i + reg2_i_mux;
 
 	assign stallreq = 0;
-  //aluop_oï¿½ï¿½ï¿½Ýµï¿½ï¿½Ã´ï¿½ï¿½×¶Î£ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½Ø¡ï¿½ï¿½æ´¢Ö¸ï¿½ï¿½
+  //aluop_o´«µÝµ½·Ã´æ½×¶Î£¬ÓÃÓÚ¼ÓÔØ¡¢´æ´¢Ö¸Áî
   assign aluop_o = aluop_i;
-
-  //mem_addrï¿½ï¿½ï¿½Ýµï¿½ï¿½Ã´ï¿½ï¿½×¶Î£ï¿½ï¿½Ç¼ï¿½ï¿½Ø¡ï¿½ï¿½æ´¢Ö¸ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ä´æ´¢ï¿½ï¿½ï¿½ï¿½Ö·
+  
+  //mem_addr´«µÝµ½·Ã´æ½×¶Î£¬ÊÇ¼ÓÔØ¡¢´æ´¢Ö¸Áî¶ÔÓ¦µÄ´æ´¢Æ÷µØÖ·
   assign mem_addr_o = reg1_i + {{11{inst_i[4]}},inst_i[4:0]};
 
-  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ýµï¿½ï¿½Ã´ï¿½ï¿½×¶Î£ï¿½Ò²ï¿½ï¿½Îªï¿½ï¿½ï¿½Ø¡ï¿½ï¿½æ´¢Ö¸ï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½
+  //½«Á½¸ö²Ù×÷ÊýÒ²´«µÝµ½·Ã´æ½×¶Î£¬Ò²ÊÇÎª¼ÇÔØ¡¢´æ´¢Ö¸Áî×¼±¸µÄ
   assign reg2_o = reg2_i;
-
+			
 	always @ (*) begin
 		if(rst == `RstEnable) begin
 			logicout <= `ZeroWord;
@@ -99,28 +99,6 @@ module ex(
 			endcase
 		end    //if
 	end      //always
-
-	always @ (*) begin
-			if(rst == `RstEnable) begin
-				shiftres <= `ZeroWord;
-			end else begin
-				case (aluop_i)
-					`EXE_SLL_OP:			begin
-						if(reg1_i[2:0] == 0) shiftres <= reg2_i << 4'b1000;
-						else shiftres <= reg2_i << reg1_i[2:0];
-					end
-					`EXE_SRA_OP:			begin
-						if(reg1_i[2:0] == 0) shiftres <= reg2_i >> 4'b1000;
-						else shiftres <= reg2_i >>> reg1_i[2:0];
-					end
-
-					default:				begin
-						shiftres <= `ZeroWord;
-					end
-				endcase
-			end    //if
-		end      //always
-
 	always @ (*) begin
 		if(rst == `RstEnable) begin
 			moveres <= `ZeroWord;
@@ -129,15 +107,6 @@ module ex(
 			case (aluop_i)
 				`EXE_MOVE_OP:		begin
 					moveres <= reg2_i;
-				end
-				`EXE_MFIH_OP:		begin
-					moveres <= reg2_i;
-				end
-				`EXE_MTIH_OP:		begin
-					moveres <= reg1_i;
-				end
-				`EXE_CMP_OP:		begin
-					moveres <= reg1_i == reg2_i ? 16'b0 : 16'b1;
 				end
 				default : begin
 				end
@@ -169,18 +138,15 @@ module ex(
 	end	//always
 
  always @ (*) begin
-	 wd_o <= wd_i;
+	 wd_o <= wd_i;	 	 	
 	 wreg_o <= wreg_i;
-	 case ( alusel_i )
+	 case ( alusel_i ) 
 	 	`EXE_RES_LOGIC:		begin
 	 		wdata_o <= logicout;
 	 	end
-		`EXE_RES_SHIFT:		begin
-			wdata_o <= shiftres;
-		end
 	 	`EXE_RES_MOVE:		begin
 	 		wdata_o <= moveres;
-	 	end
+	 	end	 	
 	 	`EXE_RES_JUMP_BRANCH:	begin
 	 		wdata_o <= link_address_i;
 	 	end
@@ -191,6 +157,6 @@ module ex(
 	 		wdata_o <= `ZeroWord;
 	 	end
 	 endcase
- end
-
+ end	
+	
 endmodule

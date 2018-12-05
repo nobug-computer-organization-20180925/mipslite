@@ -111,7 +111,6 @@ module openmips(
   wire reg2_read;
   wire[`RegBus] reg1_data;
   wire[`RegBus] reg2_data;
-  wire[`RegBus] IH_data;
   wire[`RegAddrBus] reg1_addr;
   wire[`RegAddrBus] reg2_addr;
 
