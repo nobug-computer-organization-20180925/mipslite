@@ -174,6 +174,15 @@ module id(
 						wd_o <= 4'b1010;
 						instvalid <= `InstValid;
 					end
+					`INST_JR:		begin
+						wreg_o <= `WriteDisable;		aluop_o <= `EXE_J_OP;
+						alusel_o <= `EXE_RES_JUMP_BRANCH; reg1_read_o <= 1'b0;	reg2_read_o <= 1'b0;
+						link_addr_o <= `ZeroWord;
+						branch_target_address_o <= inst_b_address;
+						branch_flag_o <= `Branch;
+						next_inst_in_delayslot_o <= `InDelaySlot;		  	
+						instvalid <= `InstValid;	
+					end
 					default:	begin
 					end
 				endcase //case(op4)		  			

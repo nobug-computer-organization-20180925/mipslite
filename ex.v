@@ -139,7 +139,7 @@ module ex(
 		if(rst == `RstEnable) begin
 			mem_addr_o <= `ZeroWord;
 		end else begin
-			mem_addr_o <= `ZeroWord;
+			mem_addr_o <=  reg1_i + {{11{inst_i[4]}},inst_i[4:0]};
 			case (aluop_i)
 				`EXE_SW_OP:		begin
 					mem_addr_o <=  reg1_i + {{11{inst_i[4]}},inst_i[4:0]};
