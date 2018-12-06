@@ -24,7 +24,7 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  openmips_min_sopc_tb
 // File:    openmips_min_sopc_tb.v
-// Description: openmips_min_sopcµÄtestbench
+// Description: openmips_min_sopcï¿½ï¿½testbench
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -83,6 +83,8 @@ module openmips_min_sopc_tb();
 	assign mem_read = data_mem[ram2addr];
 	assign ram2datainout = ram2_OE_L ? 16'bz : data_o;
 	integer i;
+	wire[`DataBus] databf01;
+	assign databf01 = data_mem[16'hbf01];
 	always @(negedge rst) begin
 	data_mem[0]<=16'h0000;
 data_mem[1]<=16'h0000;
@@ -621,6 +623,9 @@ data_mem[533]<=16'hde20;
 data_mem[534]<=16'h168a;
 data_mem[535]<=16'h0800;
 
+
+data_mem[16'hbf00]<=16'h1234;
+data_mem[16'hbf01]<=16'h1;
 	end
 	
 	

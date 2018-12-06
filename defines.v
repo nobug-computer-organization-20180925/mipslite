@@ -94,7 +94,7 @@
 
 `define InstAddrBus 15:0
 `define InstBus 15:0
-`define InstMemNum 127 // todo: change to 65535
+`define InstMemNum 1024 // todo: change to 65535
 `define InstMemNumLog2 16
 
 //数据存储器data_ram
