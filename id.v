@@ -26,7 +26,7 @@
 // File:    id.v
 // Author:  Lei Silei
 // E-mail:  leishangwen@163.com
-// Description: ����׶�
+// Description: ����׶�
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -38,7 +38,7 @@ module id(
 	input wire[`InstAddrBus]			pc_i,
 	input wire[`InstBus]          inst_i,
 
-  //����ִ�н׶ε�ָ���һЩ��Ϣ�����ڽ��load���
+  //����ִ�н׶ε�ָ���һЩ��Ϣ�����ڽ��load���
   input wire[`AluOpBus]					ex_aluop_i,
 
 	//����ִ�н׶ε�ָ��Ҫд���Ŀ�ļĴ������
@@ -216,7 +216,7 @@ module id(
 								instvalid <= `InstValid;	
 								wd_o <= `RARegAddr;
 							end
-							3'b100: begin //MFPC
+							3'b010: begin //MFPC
 								aluop_o <= `EXE_MOVE_OP;
 								alusel_o <= `EXE_RES_MOVE;   
 								reg1_read_o <= 1'b0;	
