@@ -107,8 +107,9 @@ module id(
   assign inst_b2_address = pc_i + {{8{inst_i[7]}}, inst_i[7:0]} + 16'b1;
   
  assign stallreq = stallreq_for_reg1_loadrelate | stallreq_for_reg2_loadrelate;
-  assign pre_inst_is_load = (ex_aluop_i == `EXE_LW_OP) ? 1'b1 : 1'b0;
-  
+  assign pre_inst_is_load = (ex_aluop_i == `EXE_LW_OP ||
+ ex_aluop_i == `EXE_SW_OP ||
+ ex_aluop_i == `EXE_SWRS_OP) ? 1'b1 : 1'b0; 
   assign inst_o = inst_i;
 
 	always @ (*) begin	

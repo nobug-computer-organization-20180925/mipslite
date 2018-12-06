@@ -40,6 +40,7 @@ module ctrl(
 
   //来自执行阶段的暂停请求
 	input wire                   stallreq_from_ex,
+	input wire                   mem_ce_o,
 	output reg[5:0]              stall       
 	
 );
@@ -48,6 +49,8 @@ module ctrl(
 	always @ (*) begin
 		if(rst == `RstEnable) begin
 			stall <= 6'b000000;
+		end else if(mem_ce_o == `ChipEnable) begin
+			stall <= 6'b011111;			
 		end else if(stallreq_from_ex == `Stop) begin
 			stall <= 6'b001111;
 		end else if(stallreq_from_id == `Stop) begin

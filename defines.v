@@ -100,7 +100,7 @@
 //数据存储器data_ram
 `define DataAddrBus 15:0
 `define DataBus 15:0
-`define DataMemNum 127// todo: change to 65535
+`define DataMemNum 65535// todo: change to 65535
 
 
 //通用寄存器regfile

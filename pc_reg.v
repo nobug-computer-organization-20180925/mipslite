@@ -38,6 +38,7 @@ module pc_reg(
 
 	input wire                    branch_flag_i,
 	input wire[`RegBus]           branch_target_address_i,
+	input wire ram_ce_o,
 	
 	
 	output reg[`InstAddrBus] pc,
@@ -48,7 +49,7 @@ module pc_reg(
 	always @ (posedge clk) begin
 		if (ce == `ChipDisable) begin
 			pc <= 16'h0000;
-		end else if(stall[0] == `NoStop) begin //!!FIXME
+		end else if(stall[0] == `NoStop && !ram_ce_o) begin //!!FIXME
 			if(branch_flag_i == `Branch) begin
 				pc <= branch_target_address_i;
 			end else begin
