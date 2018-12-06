@@ -1,5 +1,5 @@
-//////////////////////////////////////////////////////////////////////
-////                                                              ////
+
+
 //// Copyright (C) 2014 leishangwen@163.com                       ////
 ////                                                              ////
 //// This source file may be used and distributed without         ////
@@ -634,7 +634,7 @@ data_mem[16'hbf01]<=16'h1;
 	
 	always @ (posedge ram2_WE_L) begin
 		if (ram2_CE == `ChipEnable) begin
-			//data_o <= ZeroWord;
+			
 		end else if(ram2_OE_L == `WriteEnable) begin
 		      data_mem[ram2addr] <= ram2datainout;
 		end

@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////////////////////
+
 ////                                                              ////
 //// Copyright (C) 2014 leishangwen@163.com                       ////
 ////                                                              ////
@@ -24,14 +24,7 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  openmips_min_sopc
 // File:    openmips_min_sopc.v
-// Description: ����OpenMIPS��������һ����SOPC��������֤�߱���
-//              wishbone���߽ӿڵ�openmips����SOPC����openmips��
-//              wb_conmax��GPIO controller��flash controller��uart 
-//              controller���Լ���������flash��ģ��flashmem��������
-//              �洢ָ����������ⲿram��ģ��datamem�������д洢
-//              ���ݣ����Ҿ���wishbone���߽ӿ�    
-// Revision: 1.0
-//////////////////////////////////////////////////////////////////////
+//
 
 `include "defines.v"
 
@@ -59,7 +52,7 @@ module openmips_min_sopc(
 	 output wire[`RegBus] ram2addr
 	
 );
-  //����ָ��洢��
+  
   wire[`InstAddrBus] inst_addr;
   reg[`InstBus] inst;
   wire rom_ce;
@@ -115,7 +108,7 @@ module openmips_min_sopc(
 	 assign ram1datainout = 16'bz;
 	 assign ram1addr = 0;
 	 
-//	 assign ram2_CE = ~mem_ce_i;
+
 	 assign ram2_CE = 0;
 	 assign ram2_WE_L = ~ram2_OE_L | clk;
 	 assign ram2_OE_L = mem_ce_i == `ChipEnable ? mem_we_i : `WriteDisable;
@@ -129,8 +122,8 @@ module openmips_min_sopc(
 			 mem_data_o=ram2datainout;	
 		end else begin
 			inst=ram2datainout;
-		end    //if
-	end      //always
+		end    
+	end      
 
 	 assign ram2addr = mem_ce_i == `ChipEnable ? mem_addr_i : inst_addr;
 	
