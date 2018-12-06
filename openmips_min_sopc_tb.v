@@ -84,9 +84,8 @@ module openmips_min_sopc_tb();
 	assign ram2datainout = ram2_OE_L ? 16'bz : data_o;
 	integer i;
 	always @(negedge rst) begin
-	for(i=0;i<`InstMemNum;i=i+1) data_mem[i]<=0;
-	data_mem[0]<=16'h0000;;
-data_mem[1]<=16'h0000;;
+	data_mem[0]<=16'h0000;
+data_mem[1]<=16'h0000;
 data_mem[2]<=16'h0800;
 data_mem[3]<=16'h1061;
 data_mem[4]<=16'h0800;
@@ -627,7 +626,7 @@ data_mem[535]<=16'h0800;
 	
 	
 	always @ (posedge ram2_WE_L) begin
-		if (ram2_CE == `ChipDisable) begin
+		if (ram2_CE == `ChipEnable) begin
 			//data_o <= ZeroWord;
 		end else if(ram2_OE_L == `WriteEnable) begin
 		      data_mem[ram2addr] <= ram2datainout;
@@ -635,7 +634,7 @@ data_mem[535]<=16'h0800;
 	end
 	
 	always @ (*) begin
-		if (ram2_CE == `ChipDisable) begin
+		if (ram2_CE == `ChipEnable) begin
 			data_o <= `ZeroWord;
 	  end else if(ram2_OE_L == `WriteDisable) begin
 		    data_o <= mem_read;

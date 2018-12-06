@@ -67,7 +67,7 @@ module openmips_min_sopc(
   wire[`RegBus] mem_addr_i;
   wire[`RegBus] mem_data_o;
   wire[`RegBus] mem_data_i;  
-  wire[3:0] mem_ce_i;   
+  wire mem_ce_i;   
   wire[5:0] stall;
 
   
