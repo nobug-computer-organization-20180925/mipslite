@@ -99,6 +99,28 @@ module ex(
 	end      //always
 	always @ (*) begin
 		if(rst == `RstEnable) begin
+			shiftres <= `ZeroWord;
+		end else begin
+			case (aluop_i)
+				`EXE_SLL_OP:			begin
+					if(reg1_i[2:0] == 0) shiftres <= reg2_i << 4'b1000;
+					else shiftres <= reg2_i << reg1_i[2:0];
+				end
+				`EXE_SRA_OP:			begin
+					if(reg1_i[2:0] == 0) shiftres <= reg2_i >> 4'b1000;
+					else shiftres <= reg2_i >>> reg1_i[2:0];
+				end
+
+				default:				begin
+					shiftres <= `ZeroWord;
+				end
+			endcase
+		end    //if
+	end      //always
+
+
+	always @ (*) begin
+		if(rst == `RstEnable) begin
 			moveres <= `ZeroWord;
 		end else begin
 			moveres <= `ZeroWord;
@@ -168,6 +190,9 @@ module ex(
 	 	`EXE_RES_LOGIC:		begin
 	 		wdata_o <= logicout;
 	 	end
+		`EXE_RES_SHIFT:		begin
+			wdata_o <= shiftres;
+		end
 	 	`EXE_RES_MOVE:		begin
 	 		wdata_o <= moveres;
 	 	end	 	
