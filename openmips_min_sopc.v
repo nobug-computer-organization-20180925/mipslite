@@ -24,12 +24,12 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  openmips_min_sopc
 // File:    openmips_min_sopc.v
-// Description: »ùÓÚOpenMIPS´¦ÀíÆ÷µÄÒ»¸ö¼òµ¥SOPC£¬ÓÃÓÚÑéÖ¤¾ß±¸ÁË
-//              wishbone×ÜÏß½Ó¿ÚµÄopenmips£¬¸ÃSOPC°üº¬openmips¡¢
-//              wb_conmax¡¢GPIO controller¡¢flash controller£¬uart 
-//              controller£¬ÒÔ¼°ÓÃÀ´·ÂÕæflashµÄÄ£¿éflashmem£¬ÔÚÆäÖÐ
-//              ´æ´¢Ö¸Áî£¬ÓÃÀ´·ÂÕæÍâ²¿ramµÄÄ£¿édatamem£¬ÔÚÆäÖÐ´æ´¢
-//              Êý¾Ý£¬²¢ÇÒ¾ßÓÐwishbone×ÜÏß½Ó¿Ú    
+// Description: ï¿½ï¿½ï¿½ï¿½OpenMIPSï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½SOPCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ß±ï¿½ï¿½ï¿½
+//              wishboneï¿½ï¿½ï¿½ß½Ó¿Úµï¿½openmipsï¿½ï¿½ï¿½ï¿½SOPCï¿½ï¿½ï¿½ï¿½openmipsï¿½ï¿½
+//              wb_conmaxï¿½ï¿½GPIO controllerï¿½ï¿½flash controllerï¿½ï¿½uart 
+//              controllerï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½flashï¿½ï¿½Ä£ï¿½ï¿½flashmemï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//              ï¿½æ´¢Ö¸ï¿½î£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â²¿ramï¿½ï¿½Ä£ï¿½ï¿½datamemï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´æ´¢
+//              ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½Ò¾ï¿½ï¿½ï¿½wishboneï¿½ï¿½ï¿½ß½Ó¿ï¿½    
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -59,7 +59,7 @@ module openmips_min_sopc(
 	 output wire[`RegBus] ram2addr
 	
 );
-  //Á¬½ÓÖ¸Áî´æ´¢Æ÷
+  //ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½æ´¢ï¿½ï¿½
   wire[`InstAddrBus] inst_addr;
   reg[`InstBus] inst;
   wire rom_ce;
@@ -121,14 +121,14 @@ module openmips_min_sopc(
 	 assign ram2_OE_L = mem_ce_i == `ChipEnable ? mem_we_i : `WriteDisable;
 	 assign ram2datainout = (mem_ce_i == `ChipEnable && mem_we_i ? mem_data_i : 16'bz);
 
-	always @ (posedge clk) begin
+	always @ (*) begin
 		if(rst == `RstEnable) begin
-		  inst <= `ZeroWord;
-		  mem_data_o<=`ZeroWord;	
+		  inst = `ZeroWord;
+		  mem_data_o=`ZeroWord;	
 		end else if(mem_ce_i==`ChipEnable) begin
-			 mem_data_o<=ram2datainout;	
+			 mem_data_o=ram2datainout;	
 		end else begin
-			inst<=ram2datainout;
+			inst=ram2datainout;
 		end    //if
 	end      //always
 
