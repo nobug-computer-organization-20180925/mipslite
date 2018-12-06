@@ -59,6 +59,8 @@ module ex(
 	output reg[`RegBus]          mem_addr_o,
 	output wire[`RegBus]          reg2_o,
 
+	output reg[`RegBus]				uart_data,
+	output reg							uart_en,
 		output wire stallreq       
 );
 
@@ -171,14 +173,20 @@ module ex(
 		if(rst == `RstEnable) begin
 			mem_addr_o <= `ZeroWord;
 			stallreq_for_uart <= `NoStop;
+			uart_data <= `ZeroWord;
+			uart_en <= 1'b0;
 		end else begin
 			mem_addr_o <=  reg1_i + {{11{inst_i[4]}},inst_i[4:0]};
 			stallreq_for_uart <= `NoStop;
+			uart_data <= `ZeroWord;
+			uart_en <= 1'b0;
 			case (aluop_i)
 				`EXE_SW_OP:		begin
 					mem_addr_o <=  reg1_i + {{11{inst_i[4]}},inst_i[4:0]};
 					if (mem_addr_o == `UARTAddr && is_stalling == 1'b0) begin
 						stallreq_for_uart <= `Stop;
+						uart_data <= reg2_i_mux;
+						uart_en <= 1'b1;
 					end else	begin
 						stallreq_for_uart <= `NoStop;
 					end

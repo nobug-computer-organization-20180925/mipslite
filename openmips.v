@@ -48,7 +48,10 @@ module openmips(
 	output wire[`RegBus]           ram_data_o,
 	output wire                    ram_we_o,
 	output wire               ram_ce_o,
-	output wire[5:0] stall
+	output wire[5:0] stall,
+	
+	output wire[`RegBus]			ex_uart_data_o,
+	output wire ex_uart_en_o
 	
 );
 	wire[`RegBus] register2;
@@ -268,6 +271,7 @@ module openmips(
 
 	  .link_address_i(ex_link_address_i),
 		.is_in_delayslot_i(ex_is_in_delayslot_i),	  
+		.is_stalling(ex_stall_i),
 	  
 	  
 		.wd_o(ex_wd_o),
@@ -279,7 +283,8 @@ module openmips(
 		.reg2_o(ex_reg2_o),
 
 		.stallreq(stallreq_from_ex),
-		.is_stalling(ex_stall_i)
+		.uart_data(ex_uart_data_o),
+		.uart_en(ex_uart_en_o)
 		
 	);
 

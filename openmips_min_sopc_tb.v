@@ -48,6 +48,8 @@ module openmips_min_sopc_tb();
 	 
 	wire[`RegBus] ram1addr;
 	wire[`RegBus] ram2addr;
+	wire[`RegBus] uart_data;
+	wire uart_en;
        
   initial begin
     CLOCK_50 = 1'b0;
@@ -74,7 +76,9 @@ module openmips_min_sopc_tb();
    .ram2datainout(ram2datainout),
 	 
 	.ram1addr(ram1addr),
-	.ram2addr(ram2addr)
+	.ram2addr(ram2addr),
+	.uart_data(uart_data),
+	.uart_en(uart_en)
 	);
 	
 	reg[`DataBus]  data_mem[0:`DataMemNum-1];

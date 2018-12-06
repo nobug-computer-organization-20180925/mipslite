@@ -49,7 +49,10 @@ module openmips_min_sopc(
     inout wire[15:0] ram2datainout,
 	 
 	 output wire[`RegBus] ram1addr,
-	 output wire[`RegBus] ram2addr
+	 output wire[`RegBus] ram2addr,
+	 
+	 output wire[`RegBus] uart_data,
+	 output wire uart_en
 	
 );
   
@@ -79,7 +82,9 @@ module openmips_min_sopc(
 		.ram_ce_o(mem_ce_i),
 
 		.register1(register1),
-		.stall(stall)
+		.stall(stall),
+		.ex_uart_data_o(uart_data),
+		.ex_uart_en_o(uart_en)
 	
 	);
 	
