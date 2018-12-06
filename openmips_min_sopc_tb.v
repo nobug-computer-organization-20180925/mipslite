@@ -83,6 +83,8 @@ module openmips_min_sopc_tb();
 	assign mem_read = data_mem[ram2addr];
 	assign ram2datainout = ram2_OE_L ? 16'bz : data_o;
 	integer i;
+	wire[`DataBus] databf00;
+	assign databf00 = data_mem[16'hbf00];
 	wire[`DataBus] databf01;
 	assign databf01 = data_mem[16'hbf01];
 	always @(negedge rst) begin

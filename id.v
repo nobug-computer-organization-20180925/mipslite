@@ -221,7 +221,7 @@ module id(
 								alusel_o <= `EXE_RES_MOVE;   
 								reg1_read_o <= 1'b0;	
 								reg2_read_o <= 1'b0;
-								imm <= pc_i;
+								imm <= pc_i + 16'b1;
 								instvalid <= `InstValid;
 								wreg_o <= `WriteEnable;
 							end
