@@ -198,7 +198,7 @@ module openmips(
 		.branch_target_address_o(branch_target_address),       
 		.link_addr_o(id_link_address_o),
 		
-		.is_in_delayslot_o(id_is_in_delayslot_o),
+		.is_in_delayslot_o(id_is_in_delayslot_o)
 
 	);
 
