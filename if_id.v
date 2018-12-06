@@ -26,7 +26,7 @@
 // File:    if_id.v
 // Author:  Lei Silei
 // E-mail:  leishangwen@163.com
-// Description: IF/ID½×¶ÎµÄ¼Ä´æÆ÷
+// Description: IF/IDï¿½×¶ÎµÄ¼Ä´ï¿½ï¿½ï¿½
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -37,7 +37,7 @@ module if_id(
 	input	wire										clk,
 	input wire										rst,
 
-	//À´×Ô¿ØÖÆÄ£¿éµÄÐÅÏ¢
+	//ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	input wire[5:0]               stall,	
 
 	input wire[`InstAddrBus]			if_pc,
@@ -54,7 +54,7 @@ module if_id(
 		end else if(stall[1] == `Stop && stall[2] == `NoStop) begin
 			id_pc <= `ZeroWord;
 			id_inst <= `ZeroWord;	
-	  end else if(stall[1] == `NoStop) begin
+	  end else begin
 		  id_pc <= if_pc;
 		  id_inst <= if_inst;
 		end
