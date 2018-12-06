@@ -47,13 +47,14 @@ module ex(
 	//�Ƿ�ת�ơ��Լ�link address
 	input wire[`RegBus]           link_address_i,
 	input wire                    is_in_delayslot_i,	
+	input wire							is_stalling,
 	
 	
 	output reg[`RegAddrBus]       wd_o,
 	output reg                    wreg_o,
 	output reg[`RegBus]		wdata_o,
 	
-	//���������ļ��������Ϊ���ء��洢ָ��׼����
+	//���������ļ��������Ϊ���ء��洢ָ��׼����
 		output wire[`AluOpBus]        aluop_o,
 	output reg[`RegBus]          mem_addr_o,
 	output wire[`RegBus]          reg2_o,
@@ -68,16 +69,17 @@ module ex(
 	
 	wire[`RegBus] reg2_i_mux;
 	wire[`RegBus] result_sum;
+	reg stallreq_for_uart;
 	
 	assign reg2_i_mux = (aluop_i == `EXE_SUBU_OP) ? (~reg2_i)+16'b1 : reg2_i;
 	assign result_sum = reg1_i + reg2_i_mux;
 
-	assign stallreq = 0;
-  //aluop_o���ݵ��ô�׶Σ����ڼ��ء��洢ָ��
+	assign stallreq = stallreq_for_uart;
+  //aluop_o���ݵ��ô�׶Σ����ڼ��ء��洢ָ��
   assign aluop_o = aluop_i;
 
 
-  //������������Ҳ���ݵ��ô�׶Σ�Ҳ��Ϊ���ء��洢ָ��׼����
+  //������������Ҳ���ݵ��ô�׶Σ�Ҳ��Ϊ���ء��洢ָ��׼����
   assign reg2_o = reg2_i;
 			
 	always @ (*) begin
@@ -168,11 +170,18 @@ module ex(
 	always @ (*) begin
 		if(rst == `RstEnable) begin
 			mem_addr_o <= `ZeroWord;
+			stallreq_for_uart <= `NoStop;
 		end else begin
 			mem_addr_o <=  reg1_i + {{11{inst_i[4]}},inst_i[4:0]};
+			stallreq_for_uart <= `NoStop;
 			case (aluop_i)
 				`EXE_SW_OP:		begin
 					mem_addr_o <=  reg1_i + {{11{inst_i[4]}},inst_i[4:0]};
+					if (mem_addr_o == `UARTAddr && is_stalling == 1'b0) begin
+						stallreq_for_uart <= `Stop;
+					end else	begin
+						stallreq_for_uart <= `NoStop;
+					end
 				end
 				`EXE_SWRS_OP:		begin
 					mem_addr_o <=  reg1_i + {{8{inst_i[7]}},inst_i[7:0]};

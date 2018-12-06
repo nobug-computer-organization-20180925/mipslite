@@ -88,7 +88,7 @@ module openmips_min_sopc_tb();
 	wire[`DataBus] databf01;
 	assign databf01 = data_mem[16'hbf01];
 	always @(negedge rst) begin
-	data_mem[0]<=16'h0000;
+	/*data_mem[0]<=16'h0000;
 data_mem[1]<=16'h0000;
 data_mem[2]<=16'h0800;
 data_mem[3]<=16'h1061;
@@ -627,7 +627,22 @@ data_mem[535]<=16'h0800;
 
 
 data_mem[16'hbf00]<=16'h1234;
-data_mem[16'hbf01]<=16'h1;
+data_mem[16'hbf01]<=16'h1;*/
+
+	data_mem[0]<=16'h0000;
+	data_mem[1]<=16'h0000;
+	data_mem[2]<=16'h0800;
+	data_mem[3]<=16'h69bf;
+	data_mem[4]<=16'h3620;
+	data_mem[5]<=16'h694f;
+	data_mem[6]<=16'hde20;
+	data_mem[7]<=16'h0800;
+	data_mem[8]<=16'h0800;
+	data_mem[9]<=16'h694b;
+	data_mem[10]<=16'hde20;
+	data_mem[11]<=16'h0800;
+	data_mem[12]<=16'h0000;
+	data_mem[13]<=16'h0000;
 	end
 	
 	

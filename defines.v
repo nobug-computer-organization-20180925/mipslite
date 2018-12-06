@@ -119,3 +119,5 @@
 `define RARegAddr		4'b1011
 `define IHRegAddr		4'b1100
  
+//uart
+`define UARTAddr		16'hbf00
