@@ -66,8 +66,8 @@ module openmips(
 	wire[`RegBus] register2;
 
 	wire[`InstAddrBus] pc;
-	
-	assign register1 = {pc[7:0], tbre, tsre, data_ready, rdn, wrn, register2[2:0]};
+	wire write_sig;
+	assign register1 = {pc[7:0], write_sig, ram1datainout[6:0]};
 	
 	wire[`InstAddrBus] id_pc_i;
 	wire[`InstBus] id_inst_i;
@@ -355,7 +355,8 @@ module openmips(
 		.ram1_WE_L(ram1_WE_L),
 		.ram1_OE_L(ram1_OE_L),
 		.ram1datainout(ram1datainout),
-		.ram1addr(ram1addr)
+		.ram1addr(ram1addr),
+		.write_sig(write_sig)
 
 	);
 

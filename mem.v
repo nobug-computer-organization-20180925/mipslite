@@ -69,7 +69,8 @@ module mem(
     output reg wrn,
     output wire ram1_WE_L,
     output wire ram1_OE_L,
-    output wire ram1_CE
+    output wire ram1_CE,
+	 output reg write_sig
 	 
 	
 );
@@ -81,12 +82,12 @@ module mem(
 	 assign ram1_WE_L = 1;
 	 assign ram1_OE_L = 1;
 
-	 assign ram1datainout = (wrn==0 | bf01[0]==0) ? bf00 : 16'bz;
+	 assign ram1datainout =  bf00 ;
 	 assign ram1addr = 0;
 
 	reg  mem_we;
 	assign mem_we_o = mem_we ;
-	reg write_sig;
+	
 	reg wrn_next;
 	assign bf01[0] = tbre & tsre;
 	assign bf01[1] = data_ready;
@@ -120,7 +121,7 @@ module mem(
 		  mem_we <= `WriteDisable;
 		  mem_data_o <= `ZeroWord;
 		  mem_ce_o <= `ChipDisable;
-		  bf00_next<=0;
+		  bf00_next<=16'h1245;
 		  write_sig<=0;
 		end else begin
 		write_sig<=0;
@@ -131,11 +132,12 @@ module mem(
 			mem_we <= `WriteDisable;
 			mem_addr_o <= `ZeroWord;
 			mem_ce_o <= `ChipDisable;
+			  bf00_next<=16'h1245;
 			case (aluop_i)
 			   `EXE_LW_OP:		begin
-				   if(mem_addr_o == 16'hbf00) begin
+				   if(mem_addr_i == 16'hbf00) begin
 					   wdata_o <= bf00;
-				   end else if(mem_addr_o == 16'hbf01) begin
+				   end else if(mem_addr_i == 16'hbf01) begin
 					   wdata_o <= bf01;
 				    end else begin
 					mem_addr_o <= mem_addr_i;
@@ -145,7 +147,7 @@ module mem(
 				    end
 				end	
 					`EXE_SW_OP:		begin
-				   if(mem_addr_o == 16'hbf00) begin
+				   if(mem_addr_i == 16'hbf00) begin
 					    bf00_next <= reg2_i;
 						 write_sig<=1;
 				    end else begin
