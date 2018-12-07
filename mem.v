@@ -148,7 +148,7 @@ module mem(
 				end	
 					`EXE_SW_OP:		begin
 				   if(mem_addr_i == 16'hbf00) begin
-					    bf00_next <= reg2_i;
+						if(reg2_i != 16'b0)   bf00_next <= reg2_i;
 						 write_sig<=1;
 				    end else begin
 					mem_addr_o <= mem_addr_i;
