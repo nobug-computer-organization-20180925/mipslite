@@ -38,6 +38,7 @@ module openmips_min_sopc_tb();
 
 	wire[`RegBus] register1;
 	reg tbre,tsre,data_ready;
+	wire wrn,rdn;
    wire ram1_WE_L;
    wire ram2_WE_L;
    wire ram1_OE_L;
@@ -81,7 +82,9 @@ module openmips_min_sopc_tb();
    .ram2datainout(ram2datainout),
 	 
 	.ram1addr(ram1addr),
-	.ram2addr(ram2addr)
+	.ram2addr(ram2addr),
+	.wrn(wrn),
+	.rdn(rdn)
 	);
 	reg[`DataBus]  data_mem[0:`DataMemNum-1];
 	wire[`DataBus] databf00;

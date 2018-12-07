@@ -78,30 +78,34 @@ module mem(
 	wire[`RegBus] bf01;
 
 	 assign ram1_CE = 1;
-	 assign ram1_WE_L = 0;
-	 assign ram1_OE_L = 0;
-	 assign ram1datainout = 16'bz;
+	 assign ram1_WE_L = 1;
+	 assign ram1_OE_L = 1;
+
+	 assign ram1datainout = (wrn==0 | bf01[0]==0) ? bf00 : 16'bz;
 	 assign ram1addr = 0;
 
 	reg  mem_we;
 	assign mem_we_o = mem_we ;
-
+	reg write_sig;
+	reg wrn_next;
 	assign bf01[0] = tbre & tsre;
 	assign bf01[1] = data_ready;
 	
 	always @ (posedge clk) begin
 		if(rst == `RstEnable) begin
 		  wrn<=1;
+		  wrn_next<=1;
 		  rdn<=1;
-		  bf00<=0;
+		  bf00<=16'h1245;
 	end	  else begin
-				  wrn<=1;
+				  wrn<=wrn_next;
 				rdn<=1;
+				wrn_next<=1;
 			  if(data_ready == 1'b1) begin
 				  rdn<=0;
 			  end
-			  if(bf00!=bf00_next) begin
-				  wrn<=0;
+			  if(write_sig==1) begin
+				  wrn_next<=0;
 			end
 		  bf00 <= bf00_next;
 		  end
@@ -117,7 +121,9 @@ module mem(
 		  mem_data_o <= `ZeroWord;
 		  mem_ce_o <= `ChipDisable;
 		  bf00_next<=0;
+		  write_sig<=0;
 		end else begin
+		write_sig<=0;
 		  wd_o <= wd_i;
 			wreg_o <= wreg_i;
 			wdata_o <= wdata_i;
@@ -141,6 +147,7 @@ module mem(
 					`EXE_SW_OP:		begin
 				   if(mem_addr_o == 16'hbf00) begin
 					    bf00_next <= reg2_i;
+						 write_sig<=1;
 				    end else begin
 					mem_addr_o <= mem_addr_i;
 					mem_we <= `WriteEnable;

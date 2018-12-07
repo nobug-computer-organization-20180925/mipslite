@@ -67,7 +67,7 @@ module openmips(
 
 	wire[`InstAddrBus] pc;
 	
-	assign register1 = {pc[7:0], register2[7:0]};
+	assign register1 = {pc[7:0], tbre, tsre, data_ready, rdn, wrn, register2[2:0]};
 	
 	wire[`InstAddrBus] id_pc_i;
 	wire[`InstBus] id_inst_i;
