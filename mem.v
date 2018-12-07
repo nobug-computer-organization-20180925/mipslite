@@ -66,7 +66,7 @@ module mem(
     output wire[15:0] ram1addr,
     inout wire[15:0] ram1datainout,    
     output reg rdn,
-    output reg wrn,
+    output wire wrn,
     output wire ram1_WE_L,
     output wire ram1_OE_L,
     output wire ram1_CE,
@@ -77,7 +77,8 @@ module mem(
 	reg[`RegBus] bf00;
 	reg[`RegBus] bf00_next;
 	wire[`RegBus] bf01;
-
+	reg wrn_n;
+assign wrn = wrn_n | clk;
 	 assign ram1_CE = 1;
 	 assign ram1_WE_L = 1;
 	 assign ram1_OE_L = 1;
@@ -88,25 +89,25 @@ module mem(
 	reg  mem_we;
 	assign mem_we_o = mem_we ;
 	
-	reg wrn_next;
+
 	assign bf01[0] = tbre & tsre;
 	assign bf01[1] = data_ready;
 	
 	always @ (posedge clk) begin
 		if(rst == `RstEnable) begin
-		  wrn<=1;
-		  wrn_next<=1;
+		  wrn_n<=1;
+		  
 		  rdn<=1;
 		  bf00<=16'h1245;
 	end	  else begin
-				  wrn<=wrn_next;
+			  wrn_n<=1;
 				rdn<=1;
-				wrn_next<=1;
+				
 			  if(data_ready == 1'b1) begin
 				  rdn<=0;
 			  end
 			  if(write_sig==1) begin
-				  wrn_next<=0;
+				  wrn_n<=0;
 			end
 		  bf00 <= bf00_next;
 		  end
