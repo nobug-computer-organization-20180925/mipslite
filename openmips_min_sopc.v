@@ -37,11 +37,14 @@
 
 module openmips_min_sopc(
 
-	input	wire clk,
+	input	wire clk_p,
+	input wire clk_50,
 	input wire rst,
 	
 
 	output wire[`RegBus] register1,
+	output wire[7:0] high7,
+	output wire[7:0] low7,
 
     input wire tbre,
     input wire tsre,    
@@ -72,11 +75,24 @@ module openmips_min_sopc(
   wire[`RegBus] mem_data_i;  
   wire mem_ce_i;   
   wire[5:0] stall;
-
-  
+  wire[`RegBus] register;
+  assign register = {register1[15:1], data_ready};
+  wire clk;
+  assign clk = clk_p;// | clk_50;
+  wire[`RegBus] pc;
+ sevenseg sevenseg0(
+	.pc(pc[3:0]),
+	.pc_out(low7)
+	);
+sevenseg sevenseg1(
+	.pc(pc[7:4]),
+	.pc_out(high7)
+	);
+ 
  openmips openmips0(
 		.clk(clk),
 		.rst(rst),
+		.pc(pc),
 	
 		.rom_addr_o(inst_addr),
 		.rom_data_i(inst),

@@ -91,7 +91,7 @@ assign wrn = wrn_n | clk;
 	
 
 	assign bf01[0] = tbre & tsre;
-	assign bf01[1] = data_ready;
+	assign bf01[1] = 1;
 	
 	always @ (posedge clk) begin
 		if(rst == `RstEnable) begin
@@ -99,7 +99,7 @@ assign wrn = wrn_n | clk;
 		  
 		  rdn<=1;
 		  bf00<=16'h1245;
-	end	  else begin
+		end  else begin
 			  wrn_n<=1;
 				rdn<=1;
 				
@@ -137,7 +137,7 @@ assign wrn = wrn_n | clk;
 			case (aluop_i)
 			   `EXE_LW_OP:		begin
 				   if(mem_addr_i == 16'hbf00) begin
-					   wdata_o <= bf00;
+					   wdata_o <= ram1datainout;
 				   end else if(mem_addr_i == 16'hbf01) begin
 					   wdata_o <= bf01;
 				    end else begin

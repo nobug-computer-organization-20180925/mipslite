@@ -59,15 +59,14 @@ module openmips(
     output wire wrn,
     output wire ram1_WE_L,
     output wire ram1_OE_L,
-    output wire ram1_CE
+    output wire ram1_CE,
+	 output wire[`InstAddrBus] pc
 	 
 	
 );
 	wire[`RegBus] register2;
 
-	wire[`InstAddrBus] pc;
 	wire write_sig;
-	assign register1 = {pc[7:0], write_sig, ram1datainout[6:0]};
 	
 	wire[`InstAddrBus] id_pc_i;
 	wire[`InstBus] id_inst_i;
@@ -156,6 +155,7 @@ module openmips(
 	
   assign rom_addr_o = pc;
 
+	
   //IF/ID???????
 	if_id if_id0(
 		.clk(clk),
@@ -215,6 +215,7 @@ module openmips(
 		.stallreq(stallreq_from_id)
 	);
 
+	assign register1={register2[7:0],ram1datainout[7:0]};
   //??จน????Regfile????
 	regfile regfile1(
 		.clk (clk),
