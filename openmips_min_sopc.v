@@ -40,11 +40,14 @@ module openmips_min_sopc(
 	input	wire clk,
 	input wire rst,
 	
+
 	output wire[`RegBus] register1,
-	
-	 output wire rdn,
+
+    input wire tbre,
+    input wire tsre,    
+    input wire data_ready,    
+    output wire rdn,
     output wire wrn,
-	 
     output wire ram1_WE_L,
     output wire ram2_WE_L,
     output wire ram1_OE_L,
@@ -86,7 +89,18 @@ module openmips_min_sopc(
 		.ram_ce_o(mem_ce_i),
 
 		.register1(register1),
-		.stall(stall)
+		.stall(stall),
+
+		.tbre(tbre),
+		.tsre(tsre),
+		.data_ready(data_ready),
+		.wrn(wrn),
+		.rdn(rdn),
+		.ram1_CE(ram1_CE),
+		.ram1_WE_L(ram1_WE_L),
+		.ram1_OE_L(ram1_OE_L),
+		.ram1datainout(ram1datainout),
+		.ram1addr(ram1addr)
 	
 	);
 	
@@ -106,14 +120,6 @@ module openmips_min_sopc(
 	);
 */
 
-	 assign wrn=1;
-	 assign rdn=1;
-
-    assign ram1_CE = 1;
-	 assign ram1_WE_L = 0;
-	 assign ram1_OE_L = 0;
-	 assign ram1datainout = 16'bz;
-	 assign ram1addr = 0;
 	 
 //	 assign ram2_CE = ~mem_ce_i;
 	 assign ram2_CE = 0;

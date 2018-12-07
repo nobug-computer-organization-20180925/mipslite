@@ -48,7 +48,19 @@ module openmips(
 	output wire[`RegBus]           ram_data_o,
 	output wire                    ram_we_o,
 	output wire               ram_ce_o,
-	output wire[5:0] stall
+	output wire[5:0] stall,
+
+    input wire tbre,
+    input wire tsre,    
+    input wire data_ready,    
+    output wire[15:0] ram1addr,
+    inout wire[15:0] ram1datainout,    
+    output wire rdn,
+    output wire wrn,
+    output wire ram1_WE_L,
+    output wire ram1_OE_L,
+    output wire ram1_CE
+	 
 	
 );
 	wire[`RegBus] register2;
@@ -310,6 +322,7 @@ module openmips(
 	
   //MEM???????
 	mem mem0(
+		.clk(clk),
 		.rst(rst),
 	
 		//????EX/MEM???????
@@ -331,7 +344,19 @@ module openmips(
 		.mem_addr_o(ram_addr_o),
 		.mem_we_o(ram_we_o),
 		.mem_data_o(ram_data_o),
-		.mem_ce_o(ram_ce_o)		
+		.mem_ce_o(ram_ce_o),
+
+		.tbre(tbre),
+		.tsre(tsre),
+		.data_ready(data_ready),
+		.wrn(wrn),
+		.rdn(rdn),
+		.ram1_CE(ram1_CE),
+		.ram1_WE_L(ram1_WE_L),
+		.ram1_OE_L(ram1_OE_L),
+		.ram1datainout(ram1datainout),
+		.ram1addr(ram1addr)
+
 	);
 
   //MEM/WB???

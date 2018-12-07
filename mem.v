@@ -32,6 +32,7 @@
 
 module mem(
 
+	input wire clk,
 	input wire	rst,
 	
 	//来自执行阶段的信息	
@@ -57,12 +58,55 @@ module mem(
 		output reg[`RegBus]          mem_addr_o,
 	output wire	 mem_we_o,
 	output reg[`RegBus]          mem_data_o,
-	output reg                   mem_ce_o	
+	output reg                   mem_ce_o	,
+
+    input wire tbre,
+    input wire tsre,    
+    input wire data_ready,    
+    output wire[15:0] ram1addr,
+    inout wire[15:0] ram1datainout,    
+    output reg rdn,
+    output reg wrn,
+    output wire ram1_WE_L,
+    output wire ram1_OE_L,
+    output wire ram1_CE
+	 
 	
 );
+	reg[`RegBus] bf00;
+	reg[`RegBus] bf00_next;
+	wire[`RegBus] bf01;
+
+	 assign ram1_CE = 1;
+	 assign ram1_WE_L = 0;
+	 assign ram1_OE_L = 0;
+	 assign ram1datainout = 16'bz;
+	 assign ram1addr = 0;
+
 	reg  mem_we;
 	assign mem_we_o = mem_we ;
+
+	assign bf01[0] = tbre & tsre;
+	assign bf01[1] = data_ready;
 	
+	always @ (posedge clk) begin
+		if(rst == `RstEnable) begin
+		  wrn<=1;
+		  rdn<=1;
+		  bf00<=0;
+	end	  else begin
+				  wrn<=1;
+				rdn<=1;
+			  if(data_ready == 1'b1) begin
+				  rdn<=0;
+			  end
+			  if(bf00!=bf00_next) begin
+				  wrn<=0;
+			end
+		  bf00 <= bf00_next;
+		  end
+	 end
+
 	always @ (*) begin
 		if(rst == `RstEnable) begin
 			wd_o <= `NOPRegAddr;
@@ -72,6 +116,7 @@ module mem(
 		  mem_we <= `WriteDisable;
 		  mem_data_o <= `ZeroWord;
 		  mem_ce_o <= `ChipDisable;
+		  bf00_next<=0;
 		end else begin
 		  wd_o <= wd_i;
 			wreg_o <= wreg_i;
@@ -82,16 +127,26 @@ module mem(
 			mem_ce_o <= `ChipDisable;
 			case (aluop_i)
 			   `EXE_LW_OP:		begin
+				   if(mem_addr_o == 16'hbf00) begin
+					   wdata_o <= bf00;
+				   end else if(mem_addr_o == 16'hbf01) begin
+					   wdata_o <= bf01;
+				    end else begin
 					mem_addr_o <= mem_addr_i;
 					mem_we <= `WriteDisable;
 					wdata_o <= mem_data_i;
 					mem_ce_o <= `ChipEnable;	
+				    end
 				end	
 					`EXE_SW_OP:		begin
+				   if(mem_addr_o == 16'hbf00) begin
+					    bf00_next <= reg2_i;
+				    end else begin
 					mem_addr_o <= mem_addr_i;
 					mem_we <= `WriteEnable;
 					mem_data_o <= reg2_i;
 					mem_ce_o <= `ChipEnable;		
+				    end
 				end
 				default:		begin
           //什么也不做
