@@ -83,7 +83,7 @@ assign wrn = wrn_n | clk;
 	 assign ram1_WE_L = 1;
 	 assign ram1_OE_L = 1;
 
-	 assign ram1datainout =  bf00 ;
+	 assign ram1datainout =  (write_sig==0 | wrn_n==0) ?  bf00 : 16'bz;
 	 assign ram1addr = 0;
 
 	reg  mem_we;
@@ -149,7 +149,7 @@ assign wrn = wrn_n | clk;
 				end	
 					`EXE_SW_OP:		begin
 				   if(mem_addr_i == 16'hbf00) begin
-						if(reg2_i != 16'b0)   bf00_next <= reg2_i;
+						 bf00_next <= reg2_i;
 						 write_sig<=1;
 				    end else begin
 					mem_addr_o <= mem_addr_i;
