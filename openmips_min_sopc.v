@@ -76,7 +76,7 @@ module openmips_min_sopc(
   wire mem_ce_i;   
   wire[5:0] stall;
   wire[`RegBus] register;
-  assign register = {register1[15:1], data_ready};
+  assign register1 = {register[15:1], data_ready};
   wire clk;
   assign clk = clk_p;// | clk_50;
   wire[`RegBus] pc;
@@ -104,7 +104,7 @@ sevenseg sevenseg1(
 		.ram_data_i(mem_data_o),
 		.ram_ce_o(mem_ce_i),
 
-		.register1(register1),
+		.register1(register),
 		.stall(stall),
 
 		.tbre(tbre),

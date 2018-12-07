@@ -65,25 +65,31 @@ module mem(
     input wire data_ready,    
     output wire[15:0] ram1addr,
     inout wire[15:0] ram1datainout,    
-    output reg rdn,
+    output wire rdn,
     output wire wrn,
     output wire ram1_WE_L,
     output wire ram1_OE_L,
     output wire ram1_CE,
-	 output reg write_sig
+	 output reg write_sig,
+	 output wire[`RegBus] mem_out
 	 
 	
 );
+	
 	reg[`RegBus] bf00;
 	reg[`RegBus] bf00_next;
+	
+	
+	
 	wire[`RegBus] bf01;
 	reg wrn_n;
 assign wrn = wrn_n | clk;
+assign rdn = ~wrn_n | clk;
 	 assign ram1_CE = 1;
 	 assign ram1_WE_L = 1;
 	 assign ram1_OE_L = 1;
 
-	 assign ram1datainout =  (write_sig==0 | wrn_n==0) ?  bf00 : 16'bz;
+	 assign ram1datainout =  ((write_sig==1 | wrn_n==0)) ?  bf00 : 16'bz;
 	 assign ram1addr = 0;
 
 	reg  mem_we;
@@ -92,20 +98,30 @@ assign wrn = wrn_n | clk;
 
 	assign bf01[0] = tbre & tsre;
 	assign bf01[1] = 1;
+	reg[`RegBus] bf00_load;
+	
+	wire temp;
+	assign temp =  ((write_sig==1 | wrn_n==0));
+	assign mem_out = {temp, bf00[6:0], bf00_load[7:0]};
 	
 	always @ (posedge clk) begin
+	
 		if(rst == `RstEnable) begin
 		  wrn_n<=1;
-		  
-		  rdn<=1;
+		  bf00_load <= 16'h5421;
+	//	  rdn<=1;
 		  bf00<=16'h1245;
 		end  else begin
 			  wrn_n<=1;
-				rdn<=1;
+			  
+			  if(~((write_sig==1 | wrn_n==0))) bf00_load <= ram1datainout;
+			
+			  
+			//	rdn<=1;
 				
-			  if(data_ready == 1'b1) begin
-				  rdn<=0;
-			  end
+			//  if(data_ready == 1'b1) begin
+		//		  rdn<=0;
+		//	  end
 			  if(write_sig==1) begin
 				  wrn_n<=0;
 			end
@@ -137,7 +153,7 @@ assign wrn = wrn_n | clk;
 			case (aluop_i)
 			   `EXE_LW_OP:		begin
 				   if(mem_addr_i == 16'hbf00) begin
-					   wdata_o <= ram1datainout;
+					   wdata_o <= bf00_load;
 				   end else if(mem_addr_i == 16'hbf01) begin
 					   wdata_o <= bf01;
 				    end else begin

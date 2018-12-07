@@ -215,7 +215,8 @@ module openmips(
 		.stallreq(stallreq_from_id)
 	);
 
-	assign register1={register2[7:0],ram1datainout[7:0]};
+	wire[`RegBus] mem_out;
+	assign register1=mem_out;
   //??จน????Regfile????
 	regfile regfile1(
 		.clk (clk),
@@ -357,7 +358,8 @@ module openmips(
 		.ram1_OE_L(ram1_OE_L),
 		.ram1datainout(ram1datainout),
 		.ram1addr(ram1addr),
-		.write_sig(write_sig)
+		.write_sig(write_sig),
+		.mem_out(mem_out)
 
 	);
 

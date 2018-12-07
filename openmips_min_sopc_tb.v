@@ -60,14 +60,14 @@ module openmips_min_sopc_tb();
     rst = `RstEnable;
 	 tbre = 1;
 	 tsre = 1;
-	 data_ready = 0;
+	 data_ready = 1;
     #195 rst= `RstDisable;
     #4100 $stop;
 	 
   end
        
   openmips_min_sopc openmips_min_sopc0(
-		.clk(CLOCK_50),
+		.clk_p(CLOCK_50),
 		.rst(rst),
 		.register1(register1),
 		.tbre(tbre),
