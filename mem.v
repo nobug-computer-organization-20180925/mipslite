@@ -132,7 +132,7 @@ module mem(
 			mem_we <= `WriteDisable;
 			mem_addr_o <= `ZeroWord;
 			mem_ce_o <= `ChipDisable;
-			  bf00_next<=16'h1245;
+		
 			case (aluop_i)
 			   `EXE_LW_OP:		begin
 				   if(mem_addr_i == 16'hbf00) begin
