@@ -80,8 +80,11 @@ module openmips_min_sopc_tb();
 	.uart_data(uart_data),
 	.uart_en(uart_en)
 	);
-	
 	reg[`DataBus]  data_mem[0:`DataMemNum-1];
+	wire[`DataBus] databf00;
+	assign databf00 = data_mem[16'hbf00];
+	wire[`DataBus] databf01;
+	assign databf01 = data_mem[16'hbf01];	
 	wire[`DataBus] mem_read;
 	reg[`DataBus] data_o;
 	assign mem_read = data_mem[ram2addr];
@@ -628,6 +631,8 @@ data_mem[532]<=16'h36c0;
 data_mem[533]<=16'hde20;
 data_mem[534]<=16'h168a;
 data_mem[535]<=16'h0800;
+data_mem[16'hbf00]<=16'h1234;
+data_mem[16'hbf01]<=16'h0001;
 
 
 data_mem[16'hbf00]<=16'h1234;

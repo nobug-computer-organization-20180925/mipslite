@@ -141,6 +141,7 @@ module openmips(
 		.stall(stall),		
 		.branch_flag_i(id_branch_flag_o),
 		.branch_target_address_i(branch_target_address),		
+		.ram_ce_o(ram_ce_o),
 		.pc(pc),
 		.ce(rom_ce_o)	
 			
@@ -365,6 +366,7 @@ module openmips(
 	
   	
 		.stallreq_from_ex(stallreq_from_ex),
+		.mem_ce_o(mem_ce_o),
 
 		.stall(stall)       	
 	);

@@ -24,7 +24,7 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  regfile
 // File:    regfile.v
-// Description: Í¨ÓÃ¼Ä´æÆ÷
+// Description: Í¨ï¿½Ã¼Ä´ï¿½ï¿½ï¿½
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -35,17 +35,17 @@ module regfile(
 	input	wire clk,
 	input wire rst,
 	
-	//Ð´¶Ë¿Ú
+	//Ð´ï¿½Ë¿ï¿½
 	input wire we,
 	input wire[`RegAddrBus] waddr,
 	input wire[`RegBus] wdata,
 	
-	//¶Á¶Ë¿Ú1
+	//ï¿½ï¿½ï¿½Ë¿ï¿½1
 	input wire re1,
 	input wire[`RegAddrBus] raddr1,
 	output reg[`RegBus] rdata1,
 	
-	//¶Á¶Ë¿Ú2
+	//ï¿½ï¿½ï¿½Ë¿ï¿½2
 	input wire re2,
 	input wire[`RegAddrBus] raddr2,
 	output reg[`RegBus] rdata2,
