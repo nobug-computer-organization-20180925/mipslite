@@ -91,3 +91,7 @@ NET "ram1_WE_L" LOC = M18;
 NET "ram2_CE" LOC = N10;
 NET "ram2_OE_L" LOC = R9;
 NET "ram2_WE_L" LOC = M9;
+NET "rdn" LOC = C14;
+NET "wrn" LOC = U5;
+NET "tsre" LOC = N9;
+NET "tbre" LOC = D14;

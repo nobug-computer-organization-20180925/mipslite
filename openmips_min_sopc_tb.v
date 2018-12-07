@@ -29,7 +29,7 @@
 //////////////////////////////////////////////////////////////////////
 
 `include "defines.v"
-`timescale 1ns/1ns
+`timescale 1ns/10ps
 
 module openmips_min_sopc_tb();
 
@@ -37,6 +37,7 @@ module openmips_min_sopc_tb();
   reg     rst;
 
 	wire[`RegBus] register1;
+	reg tbre,tsre,data_ready;
    wire ram1_WE_L;
    wire ram2_WE_L;
    wire ram1_OE_L;
@@ -56,6 +57,9 @@ module openmips_min_sopc_tb();
       
   initial begin
     rst = `RstEnable;
+	 tbre = 1;
+	 tsre = 1;
+	 data_ready = 1;
     #195 rst= `RstDisable;
     #4100 $stop;
   end
@@ -64,6 +68,9 @@ module openmips_min_sopc_tb();
 		.clk(CLOCK_50),
 		.rst(rst),
 		.register1(register1),
+		.tbre(tbre),
+		.tsre(tsre),
+		.data_ready(data_ready),
 	.ram1_WE_L(ram1_WE_L),
    .ram2_WE_L(ram2_WE_L),
    .ram1_OE_L(ram1_OE_L),
