@@ -23,7 +23,7 @@ module sevenseg(
 	output wire[6:0] pc_out
     );
 
-	reg pc_7;
+	reg[6:0] pc_7;
 	assign pc_out = ~pc_7;
 	always @(*) begin
 		case(pc)

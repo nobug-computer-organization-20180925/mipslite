@@ -1,5 +1,4 @@
 
-# PlanAhead Generated physical constraints 
 
 NET "register1[15]" LOC = A14;
 NET "register1[14]" LOC = E13;
@@ -19,10 +18,8 @@ NET "register1[1]" LOC = E10;
 NET "register1[0]" LOC = D10;
 NET "clk_p" LOC = U9;
 NET "clk_50" LOC = B8;
-NET "clk_50_en" LOC = U11;
+NET "clk_50_en" LOC = V14;
 NET "rst" LOC = U10;
-NET "wrn" LOC = U5;
-NET "rdn" LOC = C14;
 NET "ram1addr[15]" LOC = H15;
 NET "ram1addr[14]" LOC = H14;
 NET "ram1addr[13]" LOC = G16;
@@ -112,3 +109,7 @@ NET "low7[3]" LOC = F9;
 NET "low7[4]" LOC = E9;
 NET "low7[5]" LOC = D9;
 NET "low7[6]" LOC = C9;
+
+# PlanAhead Generated physical constraints 
+
+NET "data_ready" LOC = A16;

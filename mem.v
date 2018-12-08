@@ -98,7 +98,7 @@ assign rdn = ~read_sig | clk;
 	
 
 	assign bf01[0] = tbre & tsre;
-	assign bf01[1] = 1;
+	assign bf01[1] = data_ready;
 	reg[`RegBus] bf00_load;
 	
 	wire temp;

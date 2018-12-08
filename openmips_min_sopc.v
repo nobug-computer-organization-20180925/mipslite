@@ -66,7 +66,7 @@ module openmips_min_sopc(
 	 output wire[`RegBus] ram2addr
 	
 );
-  //����ָ��洢��
+  //����ָ��洢��
   wire[`InstAddrBus] inst_addr;
   wire[`InstBus] inst;
   wire rom_ce;
@@ -79,7 +79,7 @@ module openmips_min_sopc(
   wire[`RegBus] register;
   assign register1 = {register[15:1], data_ready};
   wire clk;
-  assign clk = clk_p;// | (clk_50 & clk_50_en);
+  assign clk =  clk_50_en ? clk_p : clk_50;
   wire[`RegBus] pc;
  sevenseg sevenseg0(
 	.pc(pc[3:0]),

@@ -57,7 +57,7 @@ module openmips_min_sopc_tb();
     forever #10 CLOCK_50 = ~CLOCK_50;
   end
   initial begin
-	  ram1datainout_o=16'h52;
+	  ram1datainout_o=16'h44;
    end
    always @(posedge rdn) begin
 	   ram1datainout_o = ~ram1datainout_o;
