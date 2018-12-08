@@ -113,7 +113,9 @@ module openmips_min_sopc_tb();
 	assign mem_read = data_mem[ram2addr];
 	assign ram2datainout = ram2_OE_L ? 16'bz : data_o;
 	integer i;
+
 	always @(negedge rst) begin
+	data_mem[16'h44bb]<=16'h0199;
 	data_mem[0]<=16'h0000;
 data_mem[1]<=16'h0000;
 data_mem[2]<=16'h0800;
