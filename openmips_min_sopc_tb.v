@@ -74,10 +74,17 @@ module openmips_min_sopc_tb();
     #20100 $stop;
 	 
   end
+  wire clk_50_en;
+  wire[6:0] high7,low7;
+  assign clk_50_en=1;
        
   openmips_min_sopc openmips_min_sopc0(
 		.clk_p(CLOCK_50),
+		.clk_50(CLOCK_50),
+		.clk_50_en(clk_50_en),
 		.rst(rst),
+		.high7(high7),
+		.low7(low7),
 		.register1(register1),
 		.tbre(tbre),
 		.tsre(tsre),
