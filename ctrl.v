@@ -26,7 +26,7 @@
 // File:    ctrl.v
 // Author:  Lei Silei
 // E-mail:  leishangwen@163.com
-// Description: ¿ØÖÆÄ£¿é£¬¿ØÖÆÁ÷Ë®ÏßµÄË¢ÐÂ¡¢ÔÝÍ£µÈ
+// Description: ï¿½ï¿½ï¿½ï¿½Ä£ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë®ï¿½ßµï¿½Ë¢ï¿½Â¡ï¿½ï¿½ï¿½Í£ï¿½ï¿½
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -38,9 +38,8 @@ module ctrl(
 
 	input wire                   stallreq_from_id,
 
-  //À´×ÔÖ´ÐÐ½×¶ÎµÄÔÝÍ£ÇëÇó
+  //ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð½×¶Îµï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½
 	input wire                   stallreq_from_ex,
-	input wire                   mem_ce_o,
 	output reg[5:0]              stall       
 	
 );
@@ -48,9 +47,7 @@ module ctrl(
 
 	always @ (*) begin
 		if(rst == `RstEnable) begin
-			stall <= 6'b000000;
-		end else if(mem_ce_o == `ChipEnable) begin
-			stall <= 6'b011111;			
+			stall <= 6'b000000;	
 		end else if(stallreq_from_ex == `Stop) begin
 			stall <= 6'b001111;
 		end else if(stallreq_from_id == `Stop) begin
