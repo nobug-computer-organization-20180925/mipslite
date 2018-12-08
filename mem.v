@@ -78,13 +78,13 @@ module mem(
 	
 	reg[`RegBus] bf00;
 	reg[`RegBus] bf00_next;
-	
+	reg read_sig;
 	
 	
 	wire[`RegBus] bf01;
-	reg wrn_n;
+	reg wrn_n, rdn_n;
 assign wrn = wrn_n | clk;
-assign rdn = ~wrn_n | clk;
+assign rdn = rdn_n | clk;
 	 assign ram1_CE = 1;
 	 assign ram1_WE_L = 1;
 	 assign ram1_OE_L = 1;
@@ -103,19 +103,27 @@ assign rdn = ~wrn_n | clk;
 	wire temp;
 	assign temp =  ((write_sig==1 | wrn_n==0));
 	assign mem_out = {temp, bf00[6:0], bf00_load[7:0]};
-	
+	reg[7:0] last_op;
+	reg[15:0] last_mem_addr_i;
 	always @ (posedge clk) begin
 	
 		if(rst == `RstEnable) begin
+		last_op<=8'b0;
+		last_mem_addr_i<=16'b0;
 		  wrn_n<=1;
+		  rdn_n<=1;
 		  bf00_load <= 16'h5421;
 	//	  rdn<=1;
 		  bf00<=16'h1245;
+		
 		end  else begin
 			  wrn_n<=1;
-			  
-			  if(~((write_sig==1 | wrn_n==0))) bf00_load <= ram1datainout;
-			
+			  rdn_n<=1;
+			  last_op<=aluop_i;
+			  last_mem_addr_i<=mem_addr_i;
+
+			  if(~((rdn == 0 | write_sig==1 | wrn_n==0))) bf00_load <= ram1datainout;
+				if(last_op==`EXE_LW_OP & last_mem_addr_i == 16'hbf00) bf00_load <= 16'b0;
 			  
 			//	rdn<=1;
 				
@@ -124,8 +132,13 @@ assign rdn = ~wrn_n | clk;
 		//	  end
 			  if(write_sig==1) begin
 				  wrn_n<=0;
-			end
+				end
+				if(read_sig==1) begin
+				
+					rdn_n<=0;
+				end
 		  bf00 <= bf00_next;
+	
 		  end
 	 end
 
@@ -140,8 +153,10 @@ assign rdn = ~wrn_n | clk;
 		  mem_ce_o <= `ChipDisable;
 		  bf00_next<=16'h1245;
 		  write_sig<=0;
+		  read_sig<=0;
 		end else begin
 		write_sig<=0;
+		read_sig<=0;
 		  wd_o <= wd_i;
 			wreg_o <= wreg_i;
 			wdata_o <= wdata_i;
@@ -153,6 +168,7 @@ assign rdn = ~wrn_n | clk;
 			case (aluop_i)
 			   `EXE_LW_OP:		begin
 				   if(mem_addr_i == 16'hbf00) begin
+						read_sig<=1;
 					   wdata_o <= bf00_load;
 				   end else if(mem_addr_i == 16'hbf01) begin
 					   wdata_o <= bf01;

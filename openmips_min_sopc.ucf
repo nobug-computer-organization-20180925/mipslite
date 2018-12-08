@@ -19,6 +19,7 @@ NET "register1[1]" LOC = E10;
 NET "register1[0]" LOC = D10;
 NET "clk_p" LOC = U9;
 NET "clk_50" LOC = B8;
+NET "clk_50_en" LOC = U11;
 NET "rst" LOC = U10;
 NET "wrn" LOC = U5;
 NET "rdn" LOC = C14;
