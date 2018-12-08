@@ -45,6 +45,7 @@ module openmips_min_sopc_tb();
    wire ram2_OE_L;	 
 	wire ram1_CE;
 	wire ram2_CE;
+	reg[15:0] ram1datainout_o;
 	wire[15:0] ram1datainout;
    wire[15:0] ram2datainout;
 	 
@@ -55,14 +56,22 @@ module openmips_min_sopc_tb();
     CLOCK_50 = 1'b0;
     forever #10 CLOCK_50 = ~CLOCK_50;
   end
+  initial begin
+	  ram1datainout_o=16'h52;
+   end
+   always @(posedge rdn) begin
+	   ram1datainout_o = ~ram1datainout_o;
+  end
+
       
+  assign ram1datainout = wrn ? ram1datainout_o : 16'bz;
   initial begin
     rst = `RstEnable;
 	 tbre = 1;
 	 tsre = 1;
 	 data_ready = 1;
     #195 rst= `RstDisable;
-    #4100 $stop;
+    #20100 $stop;
 	 
   end
        
