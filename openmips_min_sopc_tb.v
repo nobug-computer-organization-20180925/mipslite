@@ -58,10 +58,9 @@ module openmips_min_sopc_tb();
   end
   initial begin
 	  ram1datainout_o=16'h44;
+	   #5000 ram1datainout_o = 16'h3;
+	   #500 ram1datainout_o = 0;
    end
-   always @(posedge rdn) begin
-	   ram1datainout_o = ~ram1datainout_o;
-  end
 
       
   assign ram1datainout = wrn ? ram1datainout_o : 16'bz;
@@ -115,7 +114,9 @@ module openmips_min_sopc_tb();
 	integer i;
 
 	always @(negedge rst) begin
-	data_mem[16'h44bb]<=16'h0199;
+	data_mem[16'h4444]<=16'h0199;
+	data_mem[16'h4445]<=16'h0200;
+	data_mem[16'h4446]<=16'h0201;
 	data_mem[0]<=16'h0000;
 data_mem[1]<=16'h0000;
 data_mem[2]<=16'h0800;
