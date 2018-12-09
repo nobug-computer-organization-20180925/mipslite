@@ -85,7 +85,7 @@ module mem(
 	wire[`RegBus] bf01;
 	reg wrn_n, rdn_n;
 assign wrn = wrn_n | clk;
-assign rdn = ~read_sig | clk;
+assign rdn = ~read_sig | ~clk;
 	 assign ram1_CE = 1;
 	 assign ram1_WE_L = 1;
 	 assign ram1_OE_L = 1;
@@ -99,11 +99,12 @@ assign rdn = ~read_sig | clk;
 
 	assign bf01[0] = tbre & tsre;
 	assign bf01[1] = data_ready;
+	assign bf01[15:2] = 14'b0;
 	reg[`RegBus] bf00_load;
 	
 	wire temp;
-	assign temp =  ((write_sig==1 | wrn_n==0));
-	assign mem_out = {temp, bf00[6:0], bf00_load[7:0]};
+	assign temp = (mem_addr_i == 16'hbf00 ? 1 : 0);
+	assign mem_out = {bf00[6:0], temp, wdata_o[7:0]};
 	
 	always @ (posedge clk) begin
 	

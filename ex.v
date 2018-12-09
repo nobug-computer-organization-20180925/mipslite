@@ -132,6 +132,10 @@ module ex(
 					if(reg1_i == reg2_i) moveres <= 16'b0;
 					else moveres <= 16'b1;
 				end
+				`EXE_SLT_OP:		begin
+					if(reg1_i >= reg2_i) moveres <= 16'b0;
+					else moveres <= 16'b1;	 
+				end
 				`EXE_SLTU_OP:		begin
 					if(reg1_i >= reg2_i) moveres <= 16'b0;
 					else moveres <= 16'b1;

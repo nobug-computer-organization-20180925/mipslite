@@ -178,7 +178,7 @@ module openmips(
 		.reg1_data_i(reg1_data),
 		.reg2_data_i(reg2_data),
 
-	  //����ִ�н׶ε�ָ��Ҫд���Ŀ�ļĴ�����Ϣ
+	  //����ִ�н׶ε�ָ��Ҫд���Ŀ�ļĴ������
 		.ex_wreg_i(ex_wreg_o),
 		.ex_wdata_i(ex_wdata_o),
 		.ex_wd_i(ex_wd_o),
@@ -216,7 +216,7 @@ module openmips(
 	);
 
 	wire[`RegBus] mem_out;
-	assign register1=mem_out;
+	assign register1={pc[10:8],tbre,tsre,mem_out[10:0]};
   //??��????Regfile????
 	regfile regfile1(
 		.clk (clk),

@@ -175,6 +175,15 @@ module id(
 						wd_o <= `TRegAddr;
 						instvalid <= `InstValid;
 					end
+					`INST_SLT:	begin
+						wreg_o <= `WriteEnable;
+						aluop_o <= `EXE_SLT_OP;
+						alusel_o <= `EXE_RES_MOVE;
+						reg1_read_o <= 1'b1;
+						reg2_read_o <= 1'b1;
+						wd_o <= `TRegAddr;
+						instvalid <= `InstValid;
+					end
 					`INST_SLTU:	begin
 						wreg_o <= `WriteEnable;
 						aluop_o <= `EXE_SLTU_OP;
