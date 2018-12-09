@@ -85,7 +85,7 @@ module mem(
 	wire[`RegBus] bf01;
 	reg wrn_n, rdn_n;
 assign wrn = wrn_n | clk;
-assign rdn = ~read_sig | ~clk;
+assign rdn = ~read_sig;
 	 assign ram1_CE = 1;
 	 assign ram1_WE_L = 1;
 	 assign ram1_OE_L = 1;
