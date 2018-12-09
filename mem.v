@@ -84,13 +84,13 @@ module mem(
 	
 	wire[`RegBus] bf01;
 	reg wrn_n, rdn_n;
-assign wrn = wrn_n | clk;
+assign wrn = ~write_sig;
 assign rdn = ~read_sig;
 	 assign ram1_CE = 1;
 	 assign ram1_WE_L = 1;
 	 assign ram1_OE_L = 1;
 
-	 assign ram1datainout =  ((write_sig==1 | wrn_n==0)) ?  bf00 : 16'bz;
+	 assign ram1datainout =  ((write_sig==1 | wrn_n==0)) ?  bf00_next : 16'bz;
 	 assign ram1addr = 0;
 
 	reg  mem_we;
@@ -143,6 +143,7 @@ assign rdn = ~read_sig;
 		  write_sig<=0;
 		  read_sig<=0;
 		end else begin
+		bf00_next<=16'h1245;
 		write_sig<=0;
 		  read_sig<=0;
 		  wd_o <= wd_i;
