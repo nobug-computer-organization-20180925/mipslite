@@ -296,6 +296,9 @@ module openmips(
 	);
 
   //EX/MEM???
+ wire[`RegBus] mem_mem_addr_last;
+ wire[`RegBus] mem_wdata_last;
+
   ex_mem ex_mem0(
 		.clk(clk),
 		.rst(rst),
@@ -317,7 +320,10 @@ module openmips(
 
 			.mem_aluop(mem_aluop_i),
 		.mem_mem_addr(mem_mem_addr_i),
-		.mem_reg2(mem_reg2_i)
+		.mem_reg2(mem_reg2_i),
+
+		.mem_mem_addr_last(mem_mem_addr_last),
+		.mem_wdata_last(mem_wdata_last)
 
 						       	
 	);
@@ -359,7 +365,10 @@ module openmips(
 		.ram1datainout(ram1datainout),
 		.ram1addr(ram1addr),
 		.write_sig(write_sig),
-		.mem_out(mem_out)
+		.mem_out(mem_out),
+
+		.mem_addr_i_last(mem_mem_addr_last),
+		.mem_data_i_last(mem_wdata_last)
 
 	);
 
