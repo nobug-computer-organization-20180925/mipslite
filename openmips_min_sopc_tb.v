@@ -117,6 +117,7 @@ module openmips_min_sopc_tb();
 	data_mem[16'h4444]<=16'h0199;
 	data_mem[16'h4445]<=16'h0200;
 	data_mem[16'h4446]<=16'h0201;
+	/*
 	data_mem[0]<=16'h0000;
 data_mem[1]<=16'h0000;
 data_mem[2]<=16'h0800;
@@ -653,6 +654,39 @@ data_mem[532]<=16'h36c0;
 data_mem[533]<=16'hde20;
 data_mem[534]<=16'h168a;
 data_mem[535]<=16'h0800;
+data_mem[0]<=16'h0800;
+data_mem[1]<=16'h6901;
+data_mem[2]<=16'h6d03;
+data_mem[3]<=16'h35a4;
+data_mem[4]<=16'h4d83;
+data_mem[5]<=16'h6c60;
+data_mem[6]<=16'hec2a;
+data_mem[7]<=16'h6003;
+data_mem[8]<=16'h4c01;
+data_mem[9]<=16'h2cfd;
+data_mem[10]<=16'hec2a;
+data_mem[11]<=16'h2df9;
+data_mem[12]<=16'h4d01;
+data_mem[13]<=16'hef00;
+data_mem[14]<=16'h0800;
+*/
+data_mem[1]<=16'h6aff;
+data_mem[2]<=16'h6bc0;
+data_mem[3]<=16'h3360;
+data_mem[4]<=16'h6dff;
+data_mem[5]<=16'h35a0;
+data_mem[6]<=16'h4d83;
+data_mem[7]<=16'h6961;
+data_mem[8]<=16'hdb22;
+data_mem[9]<=16'h9b82;
+data_mem[10]<=16'hdb81;
+data_mem[11]<=16'h9b21;
+data_mem[12]<=16'h2cfb;//bnez r4 fffb c
+data_mem[13]<=16'h4901;//addiu r1 0001  d
+data_mem[14]<=16'h2df8;//bnez r5 fff8 e
+data_mem[15]<=16'h4d01;//addiu r5 0001 f
+data_mem[16]<=16'hef00;//jrr7
+data_mem[17]<=16'h0800;
 data_mem[16'hbf00]<=16'h1234;
 data_mem[16'hbf01]<=16'h0001;
 

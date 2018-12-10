@@ -41,12 +41,15 @@ module mem(
 	input wire[`RegBus]				wdata_i,
 
 	
-  input wire[`AluOpBus]        aluop_i,
+	input wire[`AluOpBus]        aluop_i,
 	input wire[`RegBus]          mem_addr_i,
 	input wire[`RegBus]          reg2_i,
 	
 	//来自memory的信息
 	input wire[`RegBus]          mem_data_i,
+
+	input wire[`RegBus]          mem_addr_i_last,
+	input wire[`RegBus]          mem_data_i_last,
 	
 	
 	//送到回写阶段的信息
@@ -161,7 +164,9 @@ assign rdn = ~read_sig;
 					   wdata_o <= ram1datainout;
 				   end else if(mem_addr_i == 16'hbf01) begin
 					   wdata_o <= bf01;
-				    end else begin
+				end else if(mem_addr_i_last == mem_addr_i) begin
+					wdata_o <= mem_data_i_last;
+					end else begin
 					mem_addr_o <= mem_addr_i;
 					mem_we <= `WriteDisable;
 					wdata_o <= mem_data_i;

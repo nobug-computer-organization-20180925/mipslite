@@ -52,8 +52,10 @@ input wire[5:0]	stall,
 	
   output reg[`AluOpBus]        mem_aluop,
 	output reg[`RegBus]          mem_mem_addr,
-	output reg[`RegBus]          mem_reg2
-	
+	output reg[`RegBus]          mem_reg2,
+
+	output reg[`RegBus]	mem_wdata_last,
+	output reg[`RegBus]	mem_mem_addr_last
 );
 
 
@@ -65,13 +67,15 @@ input wire[5:0]	stall,
 			mem_aluop <= `EXE_NOP_OP; 
 			mem_mem_addr <= `ZeroWord;
 			mem_reg2 <= `ZeroWord;
+			mem_wdata_last <= `ZeroWord;
+			mem_mem_addr_last <= `ZeroWord;
 		end else if(stall[3] == `Stop && stall[4] == `NoStop) begin
 			mem_wd <= `NOPRegAddr;
 			mem_wreg <= `WriteDisable;
 			mem_wdata <= `ZeroWord;
 		  	mem_aluop <= `EXE_NOP_OP;
 			mem_mem_addr <= `ZeroWord;
-			mem_reg2 <= `ZeroWord;	
+			mem_reg2 <= `ZeroWord;
 		end else if(stall[3] == `NoStop) begin
 			mem_wd <= ex_wd;
 			mem_wreg <= ex_wreg;
@@ -79,6 +83,10 @@ input wire[5:0]	stall,
 			mem_aluop <= ex_aluop;
 			mem_mem_addr <= ex_mem_addr;
 			mem_reg2 <= ex_reg2;
+			if(ex_aluop == `EXE_SW_OP) begin
+				mem_wdata_last <= mem_wdata;
+				mem_mem_addr_last <= mem_mem_addr;
+			end
 		end    //if
 	end      //always
 			
