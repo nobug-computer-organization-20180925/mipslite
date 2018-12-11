@@ -70,7 +70,6 @@ module openmips_min_sopc_tb();
 	 tsre = 1;
 	 data_ready = 1;
     #195 rst= `RstDisable;
-    #20100 $stop;
 	 
   end
   wire clk_50_en;
@@ -721,13 +720,7 @@ data_mem[16'hbf01]<=16'h0001;
 	end
 	
 	always @ (*) begin
-		if (ram2_CE == `ChipEnable) begin
-			data_o <= `ZeroWord;
-	  end else if(ram2_OE_L == `WriteDisable) begin
 		    data_o <= mem_read;
-		end else begin
-				data_o <= `ZeroWord;
-		end
 	end		
 
 endmodule

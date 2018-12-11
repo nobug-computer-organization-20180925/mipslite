@@ -43,7 +43,8 @@ module if_id(
 	input wire[`InstAddrBus]			if_pc,
 	input wire[`InstBus]          if_inst,
 	output reg[`InstAddrBus]      id_pc,
-	output reg[`InstBus]          id_inst  
+	output reg[`InstBus]          id_inst  ,
+	input wire ram_ce_o
 	
 );
 
@@ -53,7 +54,10 @@ module if_id(
 			id_inst <= `ZeroWord;
 		end else if(stall[1] == `Stop && stall[2] == `NoStop) begin
 			id_pc <= `ZeroWord;
-			id_inst <= `ZeroWord;	
+			id_inst <= `ZeroWord;
+		end else if(ram_ce_o) begin
+			id_pc <= `ZeroWord;
+			id_inst <= `EXE_NOP;
 	  end else if(stall[1] == `NoStop) begin
 		  id_pc <= if_pc;
 		  id_inst <= if_inst;
