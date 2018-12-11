@@ -63,7 +63,15 @@ module openmips_min_sopc(
     inout wire[15:0] ram2datainout,
 	 
 	 output wire[`RegBus] ram1addr,
-	 output wire[`RegBus] ram2addr
+	 output wire[`RegBus] ram2addr,
+	output wire[`RegBus]	reg0,
+	output wire[`RegBus]	reg1,
+	output wire[`RegBus]	reg2,
+	output wire[`RegBus]	reg3,
+	output wire[`RegBus]	reg4,
+	output wire[`RegBus]	reg5,
+	output wire[`RegBus]	reg6,
+	output wire[`RegBus]	reg7
 	
 );
   //����ָ��洢��
@@ -95,7 +103,6 @@ sevenseg sevenseg1(
 	.pc_out(high7)
 	);
 
- 
  openmips openmips0(
 		.clk(clk25),
 		.rst(rst),
@@ -123,7 +130,16 @@ sevenseg sevenseg1(
 		.ram1_WE_L(ram1_WE_L),
 		.ram1_OE_L(ram1_OE_L),
 		.ram1datainout(ram1datainout),
-		.ram1addr(ram1addr)
+		.ram1addr(ram1addr),
+		.reg0(reg0),
+		.reg1(reg1),
+		.reg2(reg2),
+		.reg3(reg3),
+		.reg4(reg4),
+		.reg5(reg5),
+		.reg6(reg6),
+		.reg7(reg7)
+
 	
 	);
 	

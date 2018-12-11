@@ -50,16 +50,31 @@ module regfile(
 	input wire[`RegAddrBus] raddr2,
 	output reg[`RegBus] rdata2,
 	
-	output wire[`RegBus] register1
-	
+	output wire[`RegBus] register1,
+	output wire[`RegBus]	reg0,
+	output wire[`RegBus]	reg1,
+	output wire[`RegBus]	reg2,
+	output wire[`RegBus]	reg3,
+	output wire[`RegBus]	reg4,
+	output wire[`RegBus]	reg5,
+	output wire[`RegBus]	reg6,
+	output wire[`RegBus]	reg7
 );
 
-	reg[`RegBus]	regs[0:`RegNum-1];
+	
 	wire[`RegBus]	readDataTemp1;
 	wire[`RegBus]	readDataTemp2;
 	wire[`RegBus]	IHDataTemp;
 	
-	
+	 reg[`RegBus]	regs[0:`RegNum-1];
+	 assign reg0 = regs[0];
+	 assign reg1 = regs[1];
+	 assign reg2 = regs[2];
+	 assign reg3 = regs[3];
+	 assign reg4 = regs[4];
+	 assign reg5 = regs[5];
+	 assign reg6 = regs[6];
+	 assign reg7 = regs[7];
 	assign readDataTemp1 = regs[raddr1];
 	assign readDataTemp2 = regs[raddr2];
 	assign register1 = {8'b0,regs[7][7:0]};
@@ -78,7 +93,7 @@ module regfile(
 			regs[4]<=16'h0;
 			regs[5]<=16'h0;
 			regs[6]<=16'h0;
-			regs[7]<=16'h0;
+			regs[7]<=16'h9090;
 			regs[8]<=16'h0; //0
 			regs[9]<=16'h0; //SP
 			regs[10]<=16'h0; //T

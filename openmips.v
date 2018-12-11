@@ -60,8 +60,15 @@ module openmips(
     output wire ram1_WE_L,
     output wire ram1_OE_L,
     output wire ram1_CE,
-	 output wire[`InstAddrBus] pc
-	 
+	 output wire[`InstAddrBus] pc,
+	output wire[`RegBus]	reg0,
+	output wire[`RegBus]	reg1,
+	output wire[`RegBus]	reg2,
+	output wire[`RegBus]	reg3,
+	output wire[`RegBus]	reg4,
+	output wire[`RegBus]	reg5,
+	output wire[`RegBus]	reg6,
+	output wire[`RegBus]	reg7
 	
 );
 	wire[`RegBus] register2;
@@ -232,7 +239,16 @@ module openmips(
 		.raddr2 (reg2_addr),
 		.rdata2 (reg2_data),
 		
-		.register1(register2)
+		.register1(register2),
+		.reg0(reg0),
+		.reg1(reg1),
+		.reg2(reg2),
+		.reg3(reg3),
+		.reg4(reg4),
+		.reg5(reg5),
+		.reg6(reg6),
+		.reg7(reg7)
+
 	);
 
 	//ID/EX???

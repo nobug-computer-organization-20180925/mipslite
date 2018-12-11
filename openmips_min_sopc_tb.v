@@ -77,6 +77,14 @@ module openmips_min_sopc_tb();
   wire[6:0] high7,low7;
   assign clk_50_en=1;
        
+	wire[`RegBus]	reg0;
+	wire[`RegBus]	reg1;
+	wire[`RegBus]	reg2;
+	wire[`RegBus]	reg3;
+	wire[`RegBus]	reg4;
+	wire[`RegBus]	reg5;
+	wire[`RegBus]	reg6;
+	wire[`RegBus]	reg7;
   openmips_min_sopc openmips_min_sopc0(
 		.clk_p(CLOCK_50),
 		.clk_50(CLOCK_50),
@@ -100,7 +108,16 @@ module openmips_min_sopc_tb();
 	.ram1addr(ram1addr),
 	.ram2addr(ram2addr),
 	.wrn(wrn),
-	.rdn(rdn)
+	.rdn(rdn),
+
+		.reg0(reg0),
+		.reg1(reg1),
+		.reg2(reg2),
+		.reg3(reg3),
+		.reg4(reg4),
+		.reg5(reg5),
+		.reg6(reg6),
+		.reg7(reg7)
 	);
 	reg[`DataBus]  data_mem[0:`DataMemNum-1];
 	wire[`DataBus] databf00;
@@ -117,8 +134,9 @@ module openmips_min_sopc_tb();
 	data_mem[16'h4444]<=16'h0199;
 	data_mem[16'h4445]<=16'h0200;
 	data_mem[16'h4446]<=16'h0201;
-	/*
+
 	data_mem[0]<=16'h0000;
+		/*
 data_mem[1]<=16'h0000;
 data_mem[2]<=16'h0800;
 data_mem[3]<=16'h1061;
