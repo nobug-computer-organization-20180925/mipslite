@@ -62,6 +62,7 @@ module mem(
 	output wire	 mem_we_o,
 	output reg[`RegBus]          mem_data_o,
 	output reg                   mem_ce_o	,
+	output reg                   mem_read_o	,
 
     input wire tbre,
     input wire tsre,    

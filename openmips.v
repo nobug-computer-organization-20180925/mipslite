@@ -173,7 +173,8 @@ module openmips(
 		.if_pc(pc),
 		.if_inst(rom_data_i),
 		.id_pc(id_pc_i),
-		.id_inst(id_inst_i)      	
+		.id_inst(id_inst_i)      	,
+		.ram_ce_o(ram_ce_o)
 	);
 	
 	//??????ID???
