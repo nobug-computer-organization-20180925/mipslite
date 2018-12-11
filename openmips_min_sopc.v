@@ -83,7 +83,7 @@ module openmips_min_sopc(
   reg clk25;
   
   always @(posedge clk) begin
-	if(rst == `RstEnable) clk25=0; else clk25=~clk25;
+	if(rst == `RstEnable) clk25=clk; else clk25=~clk25;
 end
   wire[`RegBus] pc;
  sevenseg sevenseg0(
@@ -95,12 +95,6 @@ sevenseg sevenseg1(
 	.pc_out(high7)
 	);
 
-	always @(posedge clk) begin
-		if(rst == `RstEnable)
-			clk25<=0;
-		else
-			clk25<=~clk25;
-	end
  
  openmips openmips0(
 		.clk(clk25),
