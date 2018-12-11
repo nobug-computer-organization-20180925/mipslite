@@ -80,6 +80,11 @@ module openmips_min_sopc(
   assign register1 = {register[15:1], data_ready};
   wire clk;
   assign clk =  clk_50_en ? clk_p : clk_50;
+  reg clk25;
+  
+  always @(posedge clk) begin
+	if(rst == `RstEnable) clk25=0; else clk25=~clk25;
+end
   wire[`RegBus] pc;
  sevenseg sevenseg0(
 	.pc(pc[3:0]),
@@ -91,7 +96,7 @@ sevenseg sevenseg1(
 	);
  
  openmips openmips0(
-		.clk(clk),
+		.clk(clk25),
 		.rst(rst),
 		.pc(pc),
 	
@@ -140,7 +145,7 @@ sevenseg sevenseg1(
 	 
 //	 assign ram2_CE = ~mem_ce_i;
 	 assign ram2_CE = 0;
-	 assign ram2_WE_L = ~ram2_OE_L | clk;
+	 assign ram2_WE_L = ~ram2_OE_L | clk25;
 	 assign ram2_OE_L = mem_ce_i == `ChipEnable ? mem_we_i : `WriteDisable;
 	 assign ram2datainout = (mem_ce_i == `ChipEnable && mem_we_i ? mem_data_i : 16'bz);
 	 assign mem_data_o = ram2datainout;
