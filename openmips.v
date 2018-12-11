@@ -131,6 +131,7 @@ module openmips(
   wire[`RegAddrBus] reg2_addr;
 
 	wire stallreq_from_id;	
+	wire stallreq_from_id_o;	
 	wire stallreq_from_ex;
 
 
@@ -212,7 +213,7 @@ module openmips(
 		
 		.is_in_delayslot_o(id_is_in_delayslot_o),
 
-		.stallreq(stallreq_from_id)
+		.stallreq(stallreq_from_id_o)
 	);
 
 	wire[`RegBus] mem_out;
@@ -263,7 +264,9 @@ module openmips(
 		.ex_link_address(ex_link_address_i),
 		.ex_is_in_delayslot(ex_is_in_delayslot_i),
 		.is_in_delayslot_o(is_in_delayslot_i),
-		.ex_inst(ex_inst_i)
+		.ex_inst(ex_inst_i),
+		.stallreq_i(stallreq_from_id_o),
+		.stallreq_o(stallreq_from_id)
 	);		
 	
 	//EX???
