@@ -55,8 +55,66 @@ input wire[5:0]	stall,
 	output reg[`RegBus]          mem_reg2,
 
 	output reg[`RegBus]	mem_wdata_last,
-	output reg[`RegBus]	mem_mem_addr_last
+	output reg[`RegBus]	mem_mem_addr_last,
+
+	input tad0en,
+	input tad1en,
+	input tad2en,
+	input tad3en,
+	input[`RegBus] raddr,
+	input tchangeen,
+	input[`RegBus] waddr,
+	input[`RegBus] wdata,
+
+	output[`RegBus] rdata1,
+	output[`RegBus] rdata2,
+	output[`RegBus] rdata3,
+	output[`RegBus] rdata4,
+
+	output reg[`RegBus] tad0,
+	output reg[`RegBus] tad1,
+	output reg[`RegBus] tad2,
+	output reg[`RegBus] tad3
 );
+
+	reg[`RegBus] tlb0[63:0];
+	reg[`RegBus] tlb1[63:0];
+	reg[`RegBus] tlb2[63:0];
+	reg[`RegBus] tlb3[63:0];
+	reg[1:0] tnexten;
+
+	assign rdata1 = tlb0[raddr[5:0]];
+	assign rdata2 = tlb1[raddr[5:0]];
+	assign rdata3 = tlb2[raddr[5:0]];
+	assign rdata4 = tlb3[raddr[5:0]];
+
+	always @ (posedge clk) begin
+		if(rst == `RstEnable) begin
+		  tad0<=16'hbf00;
+		  tad1<=16'hbf00;
+		  tad2<=16'hbf00;
+		  tad3<=16'hbf00;
+		  tnexten<=2'b0;
+		  end else begin
+			if(tchangeen) begin
+				if(tnexten==2'b0) tad0<=waddr[15:6];
+				if(tnexten==2'b1) tad1<=waddr[15:6];
+				if(tnexten==2'b10) tad2<=waddr[15:6];
+				if(tnexten==2'b11) tad3<=waddr[15:6];
+				tnexten<=tnexten+2'b1;
+			end
+		end
+	end
+
+	always @ (posedge clk) begin
+		if(rst == `RstDisable) begin
+			if(tad0en) tlb0[waddr[5:0]]<=wdata;
+			if(tad1en) tlb1[waddr[5:0]]<=wdata;
+			if(tad2en) tlb2[waddr[5:0]]<=wdata;
+			if(tad3en) tlb3[waddr[5:0]]<=wdata;
+		end
+	end
+
 
 
 	always @ (posedge clk) begin

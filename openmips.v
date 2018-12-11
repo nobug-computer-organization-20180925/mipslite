@@ -299,6 +299,24 @@ module openmips(
  wire[`RegBus] mem_mem_addr_last;
  wire[`RegBus] mem_wdata_last;
 
+	reg tad0en;
+	reg tad1en;
+	reg tad2en;
+	reg tad3en;
+	reg[`RegBus] raddr;
+	reg tchangeen;
+	reg[1:0] tnexten;
+	reg[`RegBus] waddr;
+	reg[`RegBus] wdata;
+
+	reg[`RegBus] rdata1;
+	reg[`RegBus] rdata2;
+	reg[`RegBus] rdata3;
+	reg[`RegBus] rdata0;
+	reg[`RegBus] tad0;
+	reg[`RegBus] tad1;
+	reg[`RegBus] tad2;
+	reg[`RegBus] tad3;
   ex_mem ex_mem0(
 		.clk(clk),
 		.rst(rst),
@@ -323,7 +341,26 @@ module openmips(
 		.mem_reg2(mem_reg2_i),
 
 		.mem_mem_addr_last(mem_mem_addr_last),
-		.mem_wdata_last(mem_wdata_last)
+		.mem_wdata_last(mem_wdata_last),
+
+
+	.tad0en(tad0en),
+	.tad1en(tad1en),
+	.tad2en(tad2en),
+	.tad3en(tad3en),
+	.raddr(raddr),
+	.tchangeen(tchangeen),
+	.tnexten(tnexten),
+	.waddr(waddr),
+	.wdata(wdata),
+.rdata1 (rdata1),
+.rdata2 (rdata2),
+.rdata3 (rdata3),
+.rdata0 (rdata0),
+.tad0 (tad0),
+.tad1 (tad1),
+.tad2 (tad2),
+.tad3 (tad3)
 
 						       	
 	);
@@ -368,7 +405,25 @@ module openmips(
 		.mem_out(mem_out),
 
 		.mem_addr_i_last(mem_mem_addr_last),
-		.mem_data_i_last(mem_wdata_last)
+		.mem_data_i_last(mem_wdata_last),
+
+	.tad0en(tad0en),
+	.tad1en(tad1en),
+	.tad2en(tad2en),
+	.tad3en(tad3en),
+	.raddr(raddr),
+	.tchangeen(tchangeen),
+	.tnexten(tnexten),
+	.waddr(waddr),
+	.wdata(wdata),
+.rdata1 (rdata1),
+.rdata2 (rdata2),
+.rdata3 (rdata3),
+.rdata0 (rdata0),
+.tad0 (tad0),
+.tad1 (tad1),
+.tad2 (tad2),
+.tad3 (tad3)
 
 	);
 

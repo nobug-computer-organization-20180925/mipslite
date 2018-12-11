@@ -75,8 +75,27 @@ module mem(
     output wire ram1_CE,
 	 output reg write_sig,
 	 output reg read_sig,
-	 output wire[`RegBus] mem_out
+	 output wire[`RegBus] mem_out,
 	 
+	output reg tad0en,
+	output reg tad1en,
+	output reg tad2en,
+	output reg tad3en,
+	output reg[`RegBus] raddr,
+	output reg tchangeen,
+	input[1:0] tnexten,
+	output reg[`RegBus] waddr,
+	output reg[`RegBus] wdata,
+
+	input[`RegBus] rdata1,
+	input[`RegBus] rdata2,
+	input[`RegBus] rdata3,
+	input[`RegBus] rdata0,
+	input[`RegBus] tad0,
+	input[`RegBus] tad1,
+	input[`RegBus] tad2,
+	input[`RegBus] tad3
+
 	
 );
 	
@@ -134,6 +153,14 @@ assign rdn = ~read_sig;
 	 end
 
 	always @ (*) begin
+		tad0en<=0;
+		tad1en<=0;
+		tad2en<=0;
+		tad3en<=0;
+		raddr<=16'b0;
+		tchangeen<=0;
+		waddr<=16'b0;
+		wdata<=16'b0;
 		if(rst == `RstEnable) begin
 			wd_o <= `NOPRegAddr;
 			wreg_o <= `WriteDisable;
@@ -161,26 +188,58 @@ assign rdn = ~read_sig;
 				   if(mem_addr_i == 16'hbf00) begin
 					   read_sig<=1;
 					   wdata_o <= ram1datainout;
+				   end else if(mem_addr_i_last == mem_addr_i) begin
+				           wdata_o <= mem_data_i_last;
 				   end else if(mem_addr_i == 16'hbf01) begin
 					   wdata_o <= bf01;
-				end else if(mem_addr_i_last == mem_addr_i) begin
-					wdata_o <= mem_data_i_last;
+				   end else if(mem_addr_i[15:6] == tad0[15:6]) begin
+					   wdata_o <= rdata0;
+				   end else if(mem_addr_i[15:6] == tad1[15:6]) begin
+					   wdata_o <= rdata1;
+				   end else if(mem_addr_i[15:6] == tad2[15:6]) begin
+					   wdata_o <= rdata2;
+				   end else if(mem_addr_i[15:6] == tad3[15:6]) begin
+					   wdata_o <= rdata3;
 					end else begin
 					mem_addr_o <= mem_addr_i;
 					mem_we <= `WriteDisable;
 					wdata_o <= mem_data_i;
 					mem_ce_o <= `ChipEnable;	
+					tchangeen<=1;
 				    end
 				end	
 					`EXE_SW_OP:		begin
 				   if(mem_addr_i == 16'hbf00) begin
 						 bf00_next <= reg2_i;
 						 write_sig<=1;
+				   end else if(mem_addr_i == 16'hbf01) begin
+
 				    end else begin
 					mem_addr_o <= mem_addr_i;
 					mem_we <= `WriteEnable;
 					mem_data_o <= reg2_i;
 					mem_ce_o <= `ChipEnable;		
+					   if(mem_addr_i[15:6] == tad0[15:6]) begin
+						   tad0en<=1;
+						   waddr<=mem_addr_i;
+						   wdata<=reg2_i;
+					   end
+					   if(mem_addr_i[15:6] == tad1[15:6]) begin
+						   tad1en<=1;
+						   waddr<=mem_addr_i;
+						   wdata<=reg2_i;
+					   end
+					   if(mem_addr_i[15:6] == tad2[15:6]) begin
+						   tad2en<=1;
+						   waddr<=mem_addr_i;
+						   wdata<=reg2_i;
+					   end
+					   if(mem_addr_i[15:6] == tad3[15:6]) begin
+						   tad3en<=1;
+						   waddr<=mem_addr_i;
+						   wdata<=reg2_i;
+					   end
+				   			   
 				    end
 				end
 				default:		begin
