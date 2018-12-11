@@ -89,9 +89,16 @@ sevenseg sevenseg1(
 	.pc(pc[7:4]),
 	.pc_out(high7)
 	);
+	reg clk25;
+	always @(posedge clk) begin
+		if(rst == `RstEnable)
+			clk25<=0;
+		else
+			clk25<=~clk25;
+	end
  
  openmips openmips0(
-		.clk(clk),
+		.clk(clk25),
 		.rst(rst),
 		.pc(pc),
 	

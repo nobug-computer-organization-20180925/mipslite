@@ -69,7 +69,7 @@ input wire[5:0]	stall,
 	output[`RegBus] rdata1,
 	output[`RegBus] rdata2,
 	output[`RegBus] rdata3,
-	output[`RegBus] rdata4,
+	output[`RegBus] rdata0,
 
 	output reg[`RegBus] tad0,
 	output reg[`RegBus] tad1,
@@ -83,10 +83,10 @@ input wire[5:0]	stall,
 	reg[`RegBus] tlb3[63:0];
 	reg[1:0] tnexten;
 
-	assign rdata1 = tlb0[raddr[5:0]];
-	assign rdata2 = tlb1[raddr[5:0]];
-	assign rdata3 = tlb2[raddr[5:0]];
-	assign rdata4 = tlb3[raddr[5:0]];
+	assign rdata0 = tlb0[raddr[5:0]];
+	assign rdata1 = tlb1[raddr[5:0]];
+	assign rdata2 = tlb2[raddr[5:0]];
+	assign rdata3 = tlb3[raddr[5:0]];
 
 	always @ (posedge clk) begin
 		if(rst == `RstEnable) begin
