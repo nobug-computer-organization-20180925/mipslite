@@ -149,7 +149,7 @@ sevenseg sevenseg1(
 	 assign ram2_OE_L = mem_ce_i == `ChipEnable ? mem_we_i : `WriteDisable;
 	 assign ram2datainout = (mem_ce_i == `ChipEnable && mem_we_i ? mem_data_i : 16'bz);
 	 assign mem_data_o = ram2datainout;
-	 assign inst = ram2datainout;
+	 assign inst = mem_ce_i == `ChipEnable ? `EXE_NOP : ram2datainout;
 	 assign ram2addr = mem_ce_i == `ChipEnable ? mem_addr_i : inst_addr;
 	
 	 
