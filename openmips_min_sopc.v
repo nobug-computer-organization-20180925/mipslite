@@ -63,15 +63,7 @@ module openmips_min_sopc(
     inout wire[15:0] ram2datainout,
 	 
 	 output wire[`RegBus] ram1addr,
-	 output wire[`RegBus] ram2addr,
-	output wire[`RegBus]	reg0,
-	output wire[`RegBus]	reg1,
-	output wire[`RegBus]	reg2,
-	output wire[`RegBus]	reg3,
-	output wire[`RegBus]	reg4,
-	output wire[`RegBus]	reg5,
-	output wire[`RegBus]	reg6,
-	output wire[`RegBus]	reg7
+	 output wire[`RegBus] ram2addr
 	
 );
   //����ָ��洢��
