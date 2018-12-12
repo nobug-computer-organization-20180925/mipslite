@@ -192,18 +192,20 @@ assign rdn = ~read_sig;
 				           wdata_o <= mem_data_i_last;
 				   end else if(mem_addr_i == 16'hbf01) begin
 					   wdata_o <= bf01;
-				   end else if(mem_addr_i[15:5] == tad0[15:5]) begin
+				   end else if(mem_addr_i == tad0) begin
 					   wdata_o <= rdata0;
-				   end else if(mem_addr_i[15:5] == tad1[15:5]) begin
+				   end else if(mem_addr_i == tad1) begin
 					   wdata_o <= rdata1;
-				   end else if(mem_addr_i[15:5] == tad2[15:5]) begin
+				   end else if(mem_addr_i == tad2) begin
 					   wdata_o <= rdata2;
-				   end else if(mem_addr_i[15:5] == tad3[15:5]) begin
+				   end else if(mem_addr_i == tad3) begin
 					   wdata_o <= rdata3;
 					end else begin
 					mem_addr_o <= mem_addr_i;
 					mem_we <= `WriteDisable;
 					wdata_o <= mem_data_i;
+					wdata <= mem_data_i;
+					waddr <= mem_addr_i;
 					mem_ce_o <= `ChipEnable;	
 					tchangeen<=1;
 				    end
@@ -219,22 +221,22 @@ assign rdn = ~read_sig;
 					mem_we <= `WriteEnable;
 					mem_data_o <= reg2_i;
 					mem_ce_o <= `ChipEnable;		
-					   if(mem_addr_i[15:5] == tad0[15:5]) begin
+					   if(mem_addr_i == tad0) begin
 						   tad0en<=1;
 						   waddr<=mem_addr_i;
 						   wdata<=reg2_i;
 					   end
-					   if(mem_addr_i[15:5] == tad1[15:5]) begin
+					   if(mem_addr_i == tad1) begin
 						   tad1en<=1;
 						   waddr<=mem_addr_i;
 						   wdata<=reg2_i;
 					   end
-					   if(mem_addr_i[15:5] == tad2[15:5]) begin
+					   if(mem_addr_i == tad2) begin
 						   tad2en<=1;
 						   waddr<=mem_addr_i;
 						   wdata<=reg2_i;
 					   end
-					   if(mem_addr_i[15:5] == tad3[15:5]) begin
+					   if(mem_addr_i == tad3) begin
 						   tad3en<=1;
 						   waddr<=mem_addr_i;
 						   wdata<=reg2_i;

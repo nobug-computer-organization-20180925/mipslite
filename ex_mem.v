@@ -77,16 +77,16 @@ input wire[5:0]	stall,
 	output reg[`RegBus] tad3
 );
 
-	reg[`RegBus] tlb0[31:0];
-	reg[`RegBus] tlb1[31:0];
-	reg[`RegBus] tlb2[31:0];
-	reg[`RegBus] tlb3[31:0];
+	reg[`RegBus] tlb0;
+	reg[`RegBus] tlb1;
+	reg[`RegBus] tlb2;
+	reg[`RegBus] tlb3;
 	reg[1:0] tnexten;
 
-	assign rdata0 = tlb0[raddr[4:0]];
-	assign rdata1 = tlb1[raddr[4:0]];
-	assign rdata2 = tlb2[raddr[4:0]];
-	assign rdata3 = tlb3[raddr[4:0]];
+	assign rdata0 = tlb0;
+	assign rdata1 = tlb1;
+	assign rdata2 = tlb2;
+	assign rdata3 = tlb3;
 
 	always @ (posedge clk) begin
 		if(rst == `RstEnable) begin
@@ -97,10 +97,10 @@ input wire[5:0]	stall,
 		  tnexten<=2'b0;
 		  end else begin
 			if(tchangeen) begin
-				if(tnexten==2'b0) tad0<=waddr[15:5];
-				if(tnexten==2'b1) tad1<=waddr[15:5];
-				if(tnexten==2'b10) tad2<=waddr[15:5];
-				if(tnexten==2'b11) tad3<=waddr[15:5];
+				if(tnexten==2'b0) tad0<=waddr;
+				if(tnexten==2'b1) tad1<=waddr;
+				if(tnexten==2'b10) tad2<=waddr;
+				if(tnexten==2'b11) tad3<=waddr;
 				tnexten<=tnexten+2'b1;
 			end
 		end
@@ -108,10 +108,10 @@ input wire[5:0]	stall,
 
 	always @ (posedge clk) begin
 		if(rst == `RstDisable) begin
-			if(tad0en) tlb0[waddr[4:0]]<=wdata;
-			if(tad1en) tlb1[waddr[4:0]]<=wdata;
-			if(tad2en) tlb2[waddr[4:0]]<=wdata;
-			if(tad3en) tlb3[waddr[4:0]]<=wdata;
+			if(tad0en) tlb0<=wdata;
+			if(tad1en) tlb1<=wdata;
+			if(tad2en) tlb2<=wdata;
+			if(tad3en) tlb3<=wdata;
 		end
 	end
 
